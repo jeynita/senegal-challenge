@@ -30,6 +30,10 @@ body {
     flex-direction: column;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .header {
     width: 100%;
     display: flex;
@@ -138,7 +142,7 @@ h1 span {
     transition: transform 0.2s ease;
 }
 
-.start-button:hover {
+.start-button:hover:not(:disabled) {
     background: var(--coral);
     border-color: var(--coral);
     transform: translateY(-3px);
@@ -154,7 +158,7 @@ h1 span {
     outline-offset: 5px;
 }
 
-.start-button:active {
+.start-button:active:not(:disabled) {
     transform: translateY(0);
     box-shadow: none;
 }
@@ -180,100 +184,8 @@ h1 span {
     font-weight: 700;
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .header {
-        padding: 22px 6%;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    .logo span {
-        margin-left: 4px;
-    }
-
-    main {
-        padding: 45px 6%;
-    }
-
-    .eyebrow {
-        max-width: 100%;
-        margin-bottom: 24px;
-        font-size: 0.65rem;
-        letter-spacing: 2px;
-    }
-
-    h1 {
-        font-size: clamp(3.7rem, 15vw, 5.5rem);
-        letter-spacing: -1px;
-    }
-
-    .hero-description {
-        margin: 26px auto;
-        font-size: 1rem;
-        line-height: 1.75;
-    }
-
-    .start-button {
-        width: 100%;
-        max-width: 340px;
-        min-height: 60px;
-        padding: 16px 20px;
-    }
-
-    .hero-note {
-        font-size: 0.78rem;
-    }
-
-    .footer {
-        padding: 20px 6%;
-    }
-}
-
-@media (max-width: 360px) {
-    .logo {
-        font-size: 1.3rem;
-    }
-
-    h1 {
-        font-size: 3.5rem;
-    }
-
-    .eyebrow {
-        letter-spacing: 1.5px;
-    }
-}
-
-
-[hidden] {
-    display: none !important;
-}
-
-.players-screen {
+.players-screen,
+.duos-screen {
     width: 100%;
     max-width: 620px;
     margin: 0 auto;
@@ -444,8 +356,217 @@ h1 span {
     box-shadow: none;
 }
 
+/* Révélation des duos */
+
+.duos-screen {
+    text-align: center;
+}
+
+.duos-screen .eyebrow {
+    margin-bottom: 18px;
+}
+
+.duo-card {
+    position: relative;
+    overflow: hidden;
+    margin: 32px 0 26px;
+    padding: 28px 22px;
+    border: 1px solid rgba(246, 196, 83, 0.5);
+    border-radius: 26px;
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 14px 35px rgba(16, 44, 58, 0.14);
+}
+
+.duo-number {
+    color: var(--yellow);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.duo-names {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+}
+
+.duo-names span:not(.duo-ampersand) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 112px;
+    padding: 14px 8px;
+    border: 1px solid rgba(16, 44, 58, 0.08);
+    border-radius: 18px;
+    background: var(--cream);
+    color: var(--navy);
+    font-family: "Fredoka", sans-serif;
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 600;
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.duo-names .duo-ampersand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--coral);
+    color: var(--white);
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.duo-message {
+    color: #E6E9E7;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.duo-card.reveal {
+    animation: duoReveal 0.55s ease-out both;
+}
+
+.all-duos {
+    margin-top: 35px;
+    text-align: left;
+    animation: appear 0.5s ease-out both;
+}
+
+.all-duos h2 {
+    margin-bottom: 15px;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.6rem;
+}
+
+#all-duos-list {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+}
+
+#all-duos-list li {
+    position: relative;
+    padding: 17px 18px 17px 22px;
+    border: 1px solid #E5E0D5;
+    border-left: 5px solid var(--coral);
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--navy);
+    font-size: 0.98rem;
+    font-weight: 900;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    box-shadow: 0 4px 12px rgba(16, 44, 58, 0.04);
+}
+
+#all-duos-list li:nth-child(even) {
+    border-left-color: var(--yellow);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes duoReveal {
+    0% {
+        opacity: 0.55;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.01);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 @media (max-width: 600px) {
-    .players-screen {
+    .header {
+        padding: 22px 6%;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .logo span {
+        margin-left: 4px;
+    }
+
+    main {
+        padding: 35px 6%;
+    }
+
+    .eyebrow {
+        max-width: 100%;
+        margin-bottom: 24px;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        font-size: clamp(3.7rem, 15vw, 5.5rem);
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        margin: 26px auto;
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .start-button {
+        width: 100%;
+        max-width: 340px;
+        min-height: 60px;
+        padding: 16px 20px;
+    }
+
+    .hero-note {
+        font-size: 0.78rem;
+    }
+
+    .footer {
+        padding: 20px 6%;
+    }
+
+    .players-screen,
+    .duos-screen {
         max-width: 100%;
     }
 
@@ -464,5 +585,60 @@ h1 span {
     .add-button {
         padding: 12px;
         font-size: 0.9rem;
+    }
+
+    .duo-card {
+        padding: 25px 14px;
+    }
+
+    .duo-names {
+        grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
+        gap: 7px;
+        margin: 25px 0;
+    }
+
+    .duo-names .duo-ampersand {
+        width: 32px;
+        height: 32px;
+    }
+
+    .duo-names span:not(.duo-ampersand) {
+        min-height: 100px;
+        padding: 10px 5px;
+        font-size: clamp(1rem, 4vw, 1.35rem);
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    .eyebrow {
+        letter-spacing: 1.5px;
+    }
+
+    .duo-card {
+        padding: 22px 10px;
+    }
+
+    .duo-names {
+        grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+        gap: 5px;
+    }
+
+    .duo-names .duo-ampersand {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    .duo-names span:not(.duo-ampersand) {
+        min-height: 90px;
+        font-size: 0.98rem;
     }
 }

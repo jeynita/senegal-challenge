@@ -91,10 +91,137 @@ function renderPlayers() {
     continueButton.disabled = !validCount;
 }
 
+const duosScreen = document.querySelector("#duos-screen");
+const duosDescription = document.querySelector("#duos-description");
+const duoCard = document.querySelector("#duo-card");
+const duoNumber = document.querySelector("#duo-number");
+const duoNames = document.querySelector("#duo-names");
+const duoMessage = document.querySelector("#duo-message");
+const revealButton = document.querySelector("#reveal-button");
+const allDuos = document.querySelector("#all-duos");
+const allDuosList = document.querySelector("#all-duos-list");
+const wordsButton = document.querySelector("#words-button");
+
+let duos = [];
+let currentDuoIndex = 0;
+
 continueButton.addEventListener("click", () => {
     if (players.length < 4 || players.length % 2 !== 0) {
         return;
     }
 
-    alert("Parfait ! Attendez la formation de vos duos.");
+    duos = createDuos(players);
+    currentDuoIndex = 0;
+
+    homeScreen.hidden = true;
+    playersScreen.hidden = true;
+    duosScreen.hidden = false;
+
+    allDuos.hidden = true;
+    allDuosList.replaceChildren();
+
+    duosDescription.textContent =
+        `${duos.length} duos vont être révélés. Que le suspense commence !`;
+
+    duoNumber.textContent = "À VOUS DE JOUER";
+    duoNames.replaceChildren();
+
+    const questionOne = document.createElement("span");
+    questionOne.textContent = "?";
+
+    const ampersand = document.createElement("span");
+    ampersand.className = "duo-ampersand";
+    ampersand.textContent = "&";
+
+    const questionTwo = document.createElement("span");
+    questionTwo.textContent = "?";
+
+    duoNames.append(questionOne, ampersand, questionTwo);
+    duoMessage.textContent = "Qui sera ton partenaire ?";
+
+    revealButton.hidden = false;
+    revealButton.querySelector(".button-label").textContent =
+        "Révéler le premier duo";
 });
+
+function createDuos(names) {
+    const shuffledPlayers = [...names];
+
+    for (let i = shuffledPlayers.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+
+        [shuffledPlayers[i], shuffledPlayers[randomIndex]] =
+            [shuffledPlayers[randomIndex], shuffledPlayers[i]];
+    }
+
+    const result = [];
+
+    for (let i = 0; i < shuffledPlayers.length; i += 2) {
+        result.push([
+            shuffledPlayers[i],
+            shuffledPlayers[i + 1]
+        ]);
+    }
+
+    return result;
+}
+
+revealButton.addEventListener("click", () => {
+    if (currentDuoIndex >= duos.length) {
+        return;
+    }
+
+    const duo = duos[currentDuoIndex];
+
+    duoNumber.textContent = `DUO ${currentDuoIndex + 1}`;
+
+    duoNames.replaceChildren();
+
+    const firstPlayer = document.createElement("span");
+    firstPlayer.textContent = duo[0];
+
+    const ampersand = document.createElement("span");
+    ampersand.className = "duo-ampersand";
+    ampersand.textContent = "&";
+
+    const secondPlayer = document.createElement("span");
+    secondPlayer.textContent = duo[1];
+
+    duoNames.append(firstPlayer, ampersand, secondPlayer);
+
+    duoMessage.textContent = "Votre aventure commence ensemble !";
+
+    duoCard.classList.remove("reveal");
+    void duoCard.offsetWidth;
+    duoCard.classList.add("reveal");
+
+    currentDuoIndex++;
+
+    if (currentDuoIndex < duos.length) {
+        revealButton.querySelector(".button-label").textContent =
+            "Découvrir le duo suivant";
+    } else {
+        revealButton.hidden = true;
+        duosDescription.textContent =
+            "Tous les partenaires ont été tirés au sort !";
+
+        displayAllDuos();
+    }
+});
+
+function displayAllDuos() {
+    allDuosList.replaceChildren();
+
+    duos.forEach((duo, index) => {
+        const item = document.createElement("li");
+        item.textContent = `Duo ${index + 1} : ${duo[0]} & ${duo[1]}`;
+        allDuosList.append(item);
+    });
+
+    allDuos.hidden = false;
+}
+
+wordsButton.addEventListener("click", () => {
+    alert("Prochaine étape : chaque joueur pourra saisir ses mots secrets !");
+});
+
