@@ -4,19 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sénégal Challenge : le jeu de mime et de devinettes entre amis.">
-    <title>Sénégal Challenge - Mime, devine, rigole !</title>
 
+    <meta
+        name="description"
+        content="Sénégal Challenge : le jeu de mime et de devinettes entre amis."
+    >
+
+    <meta name="theme-color" content="#F7F4ED">
+
+    <title>Sénégal Challenge — Mime, devine, rigole !</title>
+
+    <!-- Polices Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Feuille de style -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- JavaScript -->
     <script src="script.js" defer></script>
 </head>
+
 <body>
     <header class="header">
         <a class="logo" href="#" aria-label="Sénégal Challenge, accueil">
             Sénégal<span>Challenge</span>
         </a>
-
-        <p class="header-tagline">Le jeu, version Galsen 🇸🇳</p>
     </header>
 
     <main>
@@ -31,16 +48,34 @@
 
             <p class="hero-description">
                 Réunis tes amis, laisse le hasard former les duos
-                et amusez-vous.
+                et amuse-toi !
             </p>
 
-            <button class="start-button" type="button">
-                Commencer à jouer
-                <span aria-hidden="true">→</span>
-            </button>
+            
+<button class="start-button" type="button">
+    <span class="button-label">Commencer à jouer</span>
+    <svg
+        class="button-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+    </svg>
+</button>
+
 
             <p class="hero-note">
-                Un téléphone · Des amis · Des fous rires
+                Un téléphone <span aria-hidden="true">·</span>
+                Des amis <span aria-hidden="true">·</span>
+                Des fous rires
             </p>
         </section>
     </main>

@@ -1,0 +1,269 @@
+
+:root {
+    --navy: #102C3A;
+    --yellow: #F6C453;
+    --coral: #E45D43;
+    --cream: #F7F4ED;
+    --white: #FFFFFF;
+    --muted: #68777C;
+    --text: #52636A;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--cream);
+    color: var(--navy);
+    font-family: "Nunito Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px 7%;
+}
+
+.logo {
+    color: var(--navy);
+    text-decoration: none;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--coral);
+    margin-left: 5px;
+}
+
+.logo:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 5px;
+    border-radius: 4px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 55px 7%;
+}
+
+.hero {
+    width: 100%;
+    max-width: 760px;
+    text-align: center;
+    animation: appear 0.7s ease-out both;
+}
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--coral);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    line-height: 1.7;
+}
+
+h1 {
+    font-family: "Fredoka", sans-serif;
+    font-size: clamp(4rem, 10vw, 7.5rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -2px;
+}
+
+h1 span {
+    color: var(--coral);
+}
+
+.hero-description {
+    max-width: 490px;
+    margin: 30px auto;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+.start-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 60px;
+    padding: 17px 28px;
+    border: 2px solid var(--navy);
+    border-radius: 16px;
+    background: var(--navy);
+    color: var(--white);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.button-label {
+    line-height: 1.4;
+}
+
+.button-icon {
+    flex-shrink: 0;
+    color: var(--yellow);
+    transition: transform 0.2s ease;
+}
+
+.start-button:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 rgba(16, 44, 58, 0.12);
+}
+
+.start-button:hover .button-icon {
+    transform: scale(1.15);
+}
+
+.start-button:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 5px;
+}
+
+.start-button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.hero-note {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+    line-height: 1.8;
+}
+
+.hero-note span {
+    margin: 0 5px;
+    color: var(--coral);
+}
+
+.footer {
+    padding: 22px 7%;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 22px 6%;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .logo span {
+        margin-left: 4px;
+    }
+
+    main {
+        padding: 45px 6%;
+    }
+
+    .eyebrow {
+        max-width: 100%;
+        margin-bottom: 24px;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        font-size: clamp(3.7rem, 15vw, 5.5rem);
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        margin: 26px auto;
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .start-button {
+        width: 100%;
+        max-width: 340px;
+        min-height: 60px;
+        padding: 16px 20px;
+    }
+
+    .hero-note {
+        font-size: 0.78rem;
+    }
+
+    .footer {
+        padding: 20px 6%;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    .eyebrow {
+        letter-spacing: 1.5px;
+    }
+}
