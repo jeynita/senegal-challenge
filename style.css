@@ -28,6 +28,7 @@ body {
     font-family: "Nunito Sans", sans-serif;
     display: flex;
     flex-direction: column;
+    overflow-x: clip;
 }
 
 [hidden] {
@@ -69,6 +70,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 0;
     padding: 55px 7%;
 }
 
@@ -183,6 +185,10 @@ h1 span {
     font-size: 0.85rem;
     font-weight: 700;
 }
+
+/* =========================================
+   INSCRIPTION DES JOUEURS
+========================================= */
 
 .players-screen,
 .duos-screen {
@@ -356,7 +362,9 @@ h1 span {
     box-shadow: none;
 }
 
-/* Révélation des duos */
+/* =========================================
+   RÉVÉLATION DES DUOS
+========================================= */
 
 .duos-screen {
     text-align: center;
@@ -476,177 +484,9 @@ h1 span {
     border-left-color: var(--yellow);
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes duoReveal {
-    0% {
-        opacity: 0.55;
-        transform: translateY(10px) scale(0.97);
-    }
-
-    65% {
-        opacity: 1;
-        transform: translateY(-3px) scale(1.01);
-    }
-
-    100% {
-        transform: translateY(0) scale(1);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .header {
-        padding: 22px 6%;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    .logo span {
-        margin-left: 4px;
-    }
-
-    main {
-        padding: 35px 6%;
-    }
-
-    .eyebrow {
-        max-width: 100%;
-        margin-bottom: 24px;
-        font-size: 0.65rem;
-        letter-spacing: 2px;
-    }
-
-    h1 {
-        font-size: clamp(3.7rem, 15vw, 5.5rem);
-        letter-spacing: -1px;
-    }
-
-    .hero-description {
-        margin: 26px auto;
-        font-size: 1rem;
-        line-height: 1.75;
-    }
-
-    .start-button {
-        width: 100%;
-        max-width: 340px;
-        min-height: 60px;
-        padding: 16px 20px;
-    }
-
-    .hero-note {
-        font-size: 0.78rem;
-    }
-
-    .footer {
-        padding: 20px 6%;
-    }
-
-    .players-screen,
-    .duos-screen {
-        max-width: 100%;
-    }
-
-    .screen-description {
-        font-size: 0.95rem;
-    }
-
-    .player-input-row {
-        gap: 8px;
-    }
-
-    .player-input-row input {
-        padding: 13px 11px;
-    }
-
-    .add-button {
-        padding: 12px;
-        font-size: 0.9rem;
-    }
-
-    .duo-card {
-        padding: 25px 14px;
-    }
-
-    .duo-names {
-        grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
-        gap: 7px;
-        margin: 25px 0;
-    }
-
-    .duo-names .duo-ampersand {
-        width: 32px;
-        height: 32px;
-    }
-
-    .duo-names span:not(.duo-ampersand) {
-        min-height: 100px;
-        padding: 10px 5px;
-        font-size: clamp(1rem, 4vw, 1.35rem);
-    }
-}
-
-@media (max-width: 360px) {
-    .logo {
-        font-size: 1.3rem;
-    }
-
-    h1 {
-        font-size: 3.5rem;
-    }
-
-    .eyebrow {
-        letter-spacing: 1.5px;
-    }
-
-    .duo-card {
-        padding: 22px 10px;
-    }
-
-    .duo-names {
-        grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
-        gap: 5px;
-    }
-
-    .duo-names .duo-ampersand {
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
-    }
-
-    .duo-names span:not(.duo-ampersand) {
-        min-height: 90px;
-        font-size: 0.98rem;
-    }
-}
-
-
-/* ==================================
-   SAISIE DES MOTS — SENEGAL CHALLENGE
-   ================================== */
+/* =========================================
+   SAISIE DES MOTS
+========================================= */
 
 #words-screen {
     width: min(100% - 32px, 560px);
@@ -660,7 +500,7 @@ h1 span {
 }
 
 #words-screen .eyebrow {
-    color: #E45D43;
+    color: var(--coral);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.16em;
@@ -668,7 +508,7 @@ h1 span {
 
 #words-screen .section-heading h1 {
     margin: 10px 0;
-    color: #102C3A;
+    color: var(--navy);
     font-size: clamp(2rem, 7vw, 3rem);
     line-height: 1.08;
 }
@@ -679,7 +519,7 @@ h1 span {
     padding: clamp(22px, 6vw, 36px);
     border: 1px solid rgba(16, 44, 58, 0.08);
     border-radius: 28px;
-    background: #FFFFFF;
+    background: var(--white);
     box-shadow: 0 16px 45px rgba(16, 44, 58, 0.08);
 }
 
@@ -689,8 +529,8 @@ h1 span {
     gap: 8px;
     padding: 9px 13px;
     border-radius: 999px;
-    background: #F7F4ED;
-    color: #102C3A;
+    background: var(--cream);
+    color: var(--navy);
     font-size: 0.82rem;
     font-weight: 800;
 }
@@ -699,7 +539,7 @@ h1 span {
 #next-player-screen h2,
 #words-finished-screen h2 {
     margin: 20px 0 8px;
-    color: #102C3A;
+    color: var(--navy);
     font-size: clamp(1.45rem, 5vw, 2rem);
     line-height: 1.2;
 }
@@ -729,13 +569,14 @@ h1 span {
     border: 1.5px solid #E5E5DF;
     border-radius: 15px;
     outline: none;
-    background: #F7F4ED;
-    color: #102C3A;
+    background: var(--cream);
+    color: var(--navy);
     font: inherit;
     font-size: 1rem;
-    transition: border-color 160ms ease,
-                box-shadow 160ms ease,
-                background 160ms ease;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
 }
 
 #word-inputs .word-input::placeholder {
@@ -743,8 +584,8 @@ h1 span {
 }
 
 #word-inputs .word-input:focus {
-    border-color: #E45D43;
-    background: #FFFFFF;
+    border-color: var(--coral);
+    background: var(--white);
     box-shadow: 0 0 0 4px rgba(228, 93, 67, 0.12);
 }
 
@@ -771,14 +612,14 @@ h1 span {
     border: 1px dashed #D4D6D0;
     border-radius: 14px;
     background: transparent;
-    color: #102C3A;
+    color: var(--navy);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
 }
 
 #add-word-button:hover:not(:disabled) {
-    border-color: #E45D43;
+    border-color: var(--coral);
     background: #FFF8F5;
 }
 
@@ -809,27 +650,14 @@ h1 span {
     margin-top: 20px;
 }
 
-@media (max-width: 480px) {
-    #words-screen {
-        width: min(100% - 24px, 560px);
-        padding-top: 22px;
-    }
-
-    #word-private-screen,
-    #next-player-screen,
-    #words-finished-screen {
-        border-radius: 22px;
-    }
-}
-
-
-/* ==================================
-   ÉCRAN DE JEU — SENEGAL CHALLENGE
-   ================================== */
+/* =========================================
+   ÉCRAN DE JEU
+========================================= */
 
 .game-screen {
     width: 100%;
     max-width: 560px;
+    min-width: 0;
     margin: 0 auto;
     text-align: center;
     animation: appear 0.4s ease-out both;
@@ -859,6 +687,7 @@ h1 span {
 }
 
 .game-card {
+    min-width: 0;
     padding: clamp(22px, 6vw, 34px);
     border: 1px solid rgba(246, 196, 83, 0.45);
     border-radius: 28px;
@@ -1012,53 +841,145 @@ h1 span {
     color: var(--white);
 }
 
-@keyframes timerPulse {
-    from {
-        transform: scale(1);
-    }
+/* =========================================
+   BARRE DE SCORES — PRIORITÉ MOBILE
+========================================= */
 
-    to {
-        transform: scale(1.04);
-    }
+.score-board {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    overflow: hidden;
+    border: 1px solid var(--yellow);
+    border-radius: 14px;
+    background: var(--navy);
+    color: var(--cream);
+    box-shadow: 0 4px 12px rgba(16, 44, 58, 0.12);
 }
 
-@media (max-width: 480px) {
-    .game-card {
-        padding: 22px 16px;
-        border-radius: 22px;
-    }
-
-    .game-timer {
-        width: 108px;
-        height: 108px;
-        font-size: 3rem;
-    }
-
-    .game-actions {
-        grid-template-columns: 1fr;
-    }
+.score-board[hidden] {
+    display: none !important;
 }
 
+.score-board-title {
+    margin: 0 0 8px;
+    color: var(--yellow);
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-align: left;
+}
+
+/* Défilement horizontal des équipes */
+.score-board-list {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 0 0 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--yellow) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.score-board-list::-webkit-scrollbar {
+    height: 4px;
+}
+
+.score-board-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--yellow);
+}
+
+.score-team {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: max-content;
+    min-width: 115px;
+    max-width: 175px;
+    padding: 8px 10px;
+    border: 1px solid rgba(247, 244, 237, 0.12);
+    border-radius: 10px;
+    background: rgba(247, 244, 237, 0.07);
+}
+
+.score-team-active {
+    border-color: var(--yellow);
+    background: rgba(246, 196, 83, 0.15);
+}
+
+.score-team-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.score-team-number {
+    color: var(--yellow);
+    font-size: 0.7rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.score-team-names {
+    max-width: 100px;
+    color: var(--cream);
+    font-size: 0.75rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.score-team-value {
+    display: flex;
+    flex-shrink: 0;
+    align-items: baseline;
+    gap: 3px;
+}
+
+.score-team-points {
+    color: var(--yellow);
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.score-team-label {
+    color: var(--cream);
+    font-size: 0.65rem;
+}
 
 /* =========================================
-   SENEGAL CHALLENGE — CLASSEMENT FINAL
+   CLASSEMENT FINAL
 ========================================= */
 
 .results-screen {
     width: min(100% - 32px, 620px);
     margin: 30px auto;
     padding: 32px 24px;
-    background: #F7F4ED;
+    background: var(--cream);
     border: 1px solid rgba(16, 44, 58, 0.10);
     border-radius: 28px;
-    color: #102C3A;
+    color: var(--navy);
     text-align: center;
     box-shadow: 0 18px 50px rgba(16, 44, 58, 0.09);
 }
 
 .results-screen .eyebrow {
     margin-bottom: 10px;
-    color: #E45D43;
+    color: var(--coral);
     font-size: 0.76rem;
     font-weight: 900;
     letter-spacing: 0.16em;
@@ -1066,7 +987,7 @@ h1 span {
 
 .results-screen .game-title {
     margin: 0 0 12px;
-    color: #102C3A;
+    color: var(--navy);
     font-family: "Fredoka", sans-serif;
     font-size: clamp(2rem, 6vw, 3rem);
     line-height: 1.1;
@@ -1086,9 +1007,9 @@ h1 span {
     overflow: hidden;
     margin: 0 0 32px;
     padding: 28px 20px;
-    background: #102C3A;
     border-radius: 24px;
-    color: #F7F4ED;
+    background: var(--navy);
+    color: var(--cream);
 }
 
 .winner-card::before,
@@ -1115,7 +1036,7 @@ h1 span {
 .winner-label {
     position: relative;
     margin: 0 0 14px;
-    color: #F6C453;
+    color: var(--yellow);
     font-size: 0.75rem;
     font-weight: 900;
     letter-spacing: 0.15em;
@@ -1124,7 +1045,7 @@ h1 span {
 .winner-names {
     position: relative;
     margin: 0 auto 14px;
-    color: #FFFFFF;
+    color: var(--white);
     font-family: "Fredoka", sans-serif;
     font-size: clamp(1.5rem, 5vw, 2.1rem);
     line-height: 1.25;
@@ -1137,13 +1058,13 @@ h1 span {
     margin: 0;
     padding: 8px 16px;
     border-radius: 999px;
-    background: #F6C453;
-    color: #102C3A;
+    background: var(--yellow);
+    color: var(--navy);
     font-size: 0.9rem;
     font-weight: 900;
 }
 
-/* Classement */
+/* Classement des équipes */
 
 .results-screen .ranking-title {
     margin: 0 0 16px;
@@ -1170,11 +1091,11 @@ h1 span {
     padding: 15px 14px;
     border: 1px solid #E6E2D8;
     border-radius: 16px;
-    background: #FFFFFF;
+    background: var(--white);
 }
 
 .results-ranking-item.results-ranking-winner {
-    border-color: #F6C453;
+    border-color: var(--yellow);
     background: #FFF9E9;
 }
 
@@ -1185,18 +1106,18 @@ h1 span {
     place-items: center;
     border-radius: 12px;
     background: #E9EEF0;
-    color: #102C3A;
+    color: var(--navy);
     font-size: 0.85rem;
     font-weight: 900;
 }
 
 .results-ranking-winner .ranking-position {
-    background: #F6C453;
+    background: var(--yellow);
 }
 
 .ranking-team {
     min-width: 0;
-    color: #102C3A;
+    color: var(--navy);
     font-size: 0.9rem;
     font-weight: 800;
     line-height: 1.4;
@@ -1204,13 +1125,13 @@ h1 span {
 }
 
 .ranking-points {
-    color: #102C3A;
+    color: var(--navy);
     font-size: 0.9rem;
     font-weight: 900;
     white-space: nowrap;
 }
 
-/* Bouton Rejouer */
+/* Boutons de fin de partie */
 
 .results-screen .restart-button {
     display: flex;
@@ -1222,8 +1143,8 @@ h1 span {
     padding: 16px 24px;
     border: 0;
     border-radius: 16px;
-    background: #E45D43;
-    color: #FFFFFF;
+    background: var(--coral);
+    color: var(--white);
     font-family: "Nunito Sans", sans-serif;
     font-size: 1rem;
     font-weight: 900;
@@ -1245,13 +1166,271 @@ h1 span {
 }
 
 .results-screen .restart-button:focus-visible {
-    outline: 3px solid #F6C453;
+    outline: 3px solid var(--yellow);
     outline-offset: 4px;
 }
 
-/* Adaptation aux petits écrans */
+/* =========================================
+   BOUTON ARRÊTER LA PARTIE
+========================================= */
 
-@media (max-width: 420px) {
+.stop-game-button {
+    display: flex;
+    width: min(100% - 32px, 420px);
+    min-height: 52px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto 32px;
+    padding: 14px 22px;
+    border: 1px solid rgba(228, 93, 67, 0.35);
+    border-radius: 16px;
+    background: #FFF1ED;
+    color: #B83B28;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.stop-game-button::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 3px;
+    background: currentColor;
+    transition: transform 0.2s ease;
+}
+
+.stop-game-button:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(228, 93, 67, 0.20);
+    transform: translateY(-2px);
+}
+
+.stop-game-button:hover::before {
+    transform: rotate(45deg);
+}
+
+.stop-game-button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.stop-game-button:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+}
+
+.stop-game-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes duoReveal {
+    0% {
+        opacity: 0.55;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.01);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes timerPulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.04);
+    }
+}
+
+/* =========================================
+   RESPONSIVE — TABLETTES ET TÉLÉPHONES
+========================================= */
+
+@media (max-width: 600px) {
+    .header {
+        padding: 22px 6%;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .logo span {
+        margin-left: 4px;
+    }
+
+    main {
+        padding: 35px 6%;
+    }
+
+    .eyebrow {
+        max-width: 100%;
+        margin-bottom: 24px;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        font-size: clamp(3.7rem, 15vw, 5.5rem);
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        margin: 26px auto;
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .start-button {
+        width: 100%;
+        max-width: 340px;
+        min-height: 60px;
+        padding: 16px 20px;
+    }
+
+    .hero-note {
+        font-size: 0.78rem;
+    }
+
+    .footer {
+        padding: 20px 6%;
+    }
+
+    .players-screen,
+    .duos-screen {
+        max-width: 100%;
+    }
+
+    .screen-description {
+        font-size: 0.95rem;
+    }
+
+    .player-input-row {
+        gap: 8px;
+    }
+
+    .player-input-row input {
+        padding: 13px 11px;
+    }
+
+    .add-button {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .duo-card {
+        padding: 25px 14px;
+    }
+
+    .duo-names {
+        grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
+        gap: 7px;
+        margin: 25px 0;
+    }
+
+    .duo-names .duo-ampersand {
+        width: 32px;
+        height: 32px;
+    }
+
+    .duo-names span:not(.duo-ampersand) {
+        min-height: 100px;
+        padding: 10px 5px;
+        font-size: clamp(1rem, 4vw, 1.35rem);
+    }
+
+    #words-screen {
+        width: min(100% - 24px, 560px);
+        padding-top: 22px;
+    }
+
+    #word-private-screen,
+    #next-player-screen,
+    #words-finished-screen {
+        border-radius: 22px;
+    }
+
+    .game-card {
+        padding: 22px 16px;
+        border-radius: 22px;
+    }
+
+    .game-timer {
+        width: 108px;
+        height: 108px;
+        font-size: 3rem;
+    }
+
+    .game-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .score-board {
+        padding: 9px 10px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+    }
+
+    .score-board-title {
+        font-size: 0.8rem;
+    }
+
+    .score-team {
+        min-width: 108px;
+        max-width: 155px;
+        padding: 8px;
+        gap: 7px;
+    }
+
+    .score-team-names {
+        max-width: 85px;
+        font-size: 0.72rem;
+    }
+
+    .score-team-points {
+        font-size: 1rem;
+    }
+
     .results-screen {
         width: calc(100% - 20px);
         margin: 18px auto;
@@ -1278,92 +1457,87 @@ h1 span {
     .ranking-points {
         font-size: 0.8rem;
     }
-}
 
-
-/* =========================================
-   BOUTON ARRÊTER LA PARTIE
-========================================= */
-
-.stop-game-button {
-    display: flex;
-    width: min(100% - 32px, 420px);
-    min-height: 52px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    margin: 20px auto 32px;
-    padding: 14px 22px;
-
-    border: 1px solid rgba(228, 93, 67, 0.35);
-    border-radius: 16px;
-
-    background: #FFF1ED;
-    color: #B83B28;
-
-    font-family: "Nunito Sans", sans-serif;
-    font-size: 0.95rem;
-    font-weight: 900;
-    letter-spacing: 0.01em;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-/* Petite icône d'arrêt */
-
-.stop-game-button::before {
-    content: "";
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    flex: 0 0 10px;
-    border-radius: 3px;
-    background: currentColor;
-    transition: transform 0.2s ease;
-}
-
-.stop-game-button:hover {
-    background: #E45D43;
-    border-color: #E45D43;
-    color: #FFFFFF;
-    box-shadow: 0 8px 20px rgba(228, 93, 67, 0.20);
-    transform: translateY(-2px);
-}
-
-.stop-game-button:hover::before {
-    transform: rotate(45deg);
-}
-
-.stop-game-button:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-.stop-game-button:focus-visible {
-    outline: 3px solid #F6C453;
-    outline-offset: 4px;
-}
-
-.stop-game-button:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-@media (max-width: 420px) {
     .stop-game-button {
         width: calc(100% - 24px);
         min-height: 48px;
         margin: 16px auto 24px;
         font-size: 0.9rem;
+    }
+}
+
+/* =========================================
+   TRÈ PETITS ÉCRANS
+========================================= */
+
+@media (max-width: 380px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    .eyebrow {
+        letter-spacing: 1.5px;
+    }
+
+    .duo-card {
+        padding: 22px 10px;
+    }
+
+    .duo-names {
+        grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+        gap: 5px;
+    }
+
+    .duo-names .duo-ampersand {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    .duo-names span:not(.duo-ampersand) {
+        min-height: 90px;
+        font-size: 0.98rem;
+    }
+
+    .score-board {
+        padding: 8px;
+        margin-bottom: 12px;
+        border-radius: 11px;
+    }
+
+    .score-team {
+        min-width: 100px;
+        max-width: 140px;
+        padding: 7px;
+        gap: 6px;
+    }
+
+    .score-team-names {
+        max-width: 75px;
+        font-size: 0.68rem;
+    }
+
+    .score-team-points {
+        font-size: 0.95rem;
+    }
+
+    .results-screen {
+        padding: 22px 12px;
+    }
+}
+
+/* Respect des préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }
