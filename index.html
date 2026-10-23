@@ -26,7 +26,7 @@
 
     <main>
 
-        
+      
 <section class="duos-screen" id="duos-screen" hidden>
     <p class="eyebrow">LE HASARD A PARLÉ !</p>
 
@@ -65,6 +65,70 @@
         </button>
     </div>
 </section>
+
+
+<section id="words-screen" class="players-screen" hidden>
+    <div class="section-heading">
+        <p class="eyebrow">LE SALADIER</p>
+        <h1>Place à ton imagination !</h1>
+        <p id="word-player-message">
+            Prépare tes mots en secret.
+        </p>
+    </div>
+
+    <div id="word-private-screen">
+        <div class="word-lock">
+            🔒 Saisie privée
+        </div>
+
+        <h2 id="word-player-name">À toi de jouer !</h2>
+        <p>Choisis entre 3 et 5 mots que les autres devront deviner.</p>
+
+        <form id="words-form">
+            <div id="word-inputs">
+                <input type="text" class="word-input"
+                    placeholder="Mot 1" maxlength="40" required>
+                <input type="text" class="word-input"
+                    placeholder="Mot 2" maxlength="40" required>
+                <input type="text" class="word-input"
+                    placeholder="Mot 3" maxlength="40" required>
+            </div>
+
+            <button type="button" id="add-word-button"
+                class="button button-secondary">
+                Ajouter un mot
+            </button>
+
+            <p id="words-count">3 mots minimum, 5 maximum.</p>
+            <p id="words-message" role="status"></p>
+
+            <button type="submit" class="button button-primary">
+                Valider mes mots
+            </button>
+        </form>
+    </div>
+
+    <div id="next-player-screen" hidden>
+        <h2>Mots enregistrés !</h2>
+        <p id="next-player-message">
+            Passe le téléphone au joueur suivant.
+        </p>
+        <button type="button" id="ready-button"
+            class="button button-primary">
+            Je suis prêt
+        </button>
+    </div>
+
+    <div id="words-finished-screen" hidden>
+        <h2>Le saladier est prêt !</h2>
+        <p>Tous les joueurs ont terminé leur saisie.</p>
+        <button type="button" id="prepare-salad-button"
+            class="button button-primary">
+            Préparer le saladier
+        </button>
+    </div>
+</section>
+
 
         <section class="hero" id="home-screen">
             <p class="eyebrow">TON GROUPE. TES RÈGLES. TON DÉLIRE.</p>
