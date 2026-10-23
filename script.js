@@ -1,425 +1,816 @@
+/* =========================================
+   SENEGAL CHALLENGE — SCRIPT PRINCIPAL
+   ========================================= */
 
-const homeScreen = document.querySelector("#home-screen");
-const playersScreen = document.querySelector("#players-screen");
-const duosScreen = document.querySelector("#duos-screen");
-const wordsScreen = document.querySelector("#words-screen");
+/* 1. ÉLÉMENTS HTML */
 
-const startButton = document.querySelector("#start-button");
-const backButton = document.querySelector("#back-button");
+const homeScreen = document.getElementById("home-screen");
+const playersScreen = document.getElementById("players-screen");
+const duosScreen = document.getElementById("duos-screen");
+const wordsScreen = document.getElementById("words-screen");
+const gameScreen = document.getElementById("game-screen");
 
-const playersForm = document.querySelector("#players-form");
-const playerInput = document.querySelector("#player-name");
-const playersList = document.querySelector("#players-list");
-const playerCount = document.querySelector("#player-count");
-const formMessage = document.querySelector("#form-message");
-const continueButton = document.querySelector("#continue-button");
+const startButton = document.getElementById("start-button");
+const backButton = document.getElementById("back-button");
 
-const duosDescription = document.querySelector("#duos-description");
-const duoCard = document.querySelector("#duo-card");
-const duoNumber = document.querySelector("#duo-number");
-const duoNames = document.querySelector("#duo-names");
-const duoMessage = document.querySelector("#duo-message");
-const revealButton = document.querySelector("#reveal-button");
-const allDuos = document.querySelector("#all-duos");
-const allDuosList = document.querySelector("#all-duos-list");
-const wordsButton = document.querySelector("#words-button");
+const playersForm = document.getElementById("players-form");
+const playerNameInput = document.getElementById("player-name");
+const playersList = document.getElementById("players-list");
+const playerCount = document.getElementById("player-count");
+const formMessage = document.getElementById("form-message");
+const continueButton = document.getElementById("continue-button");
 
-// Écran de saisie des mots
-const wordPlayerMessage = document.querySelector("#word-player-message");
-const wordPrivateScreen = document.querySelector("#word-private-screen");
-const wordPlayerName = document.querySelector("#word-player-name");
-const wordsForm = document.querySelector("#words-form");
-const wordInputs = document.querySelector("#word-inputs");
-const addWordButton = document.querySelector("#add-word-button");
-const wordsCount = document.querySelector("#words-count");
-const wordsMessage = document.querySelector("#words-message");
+const duoDescription = document.getElementById("duos-description");
+const duoCard = document.getElementById("duo-card");
+const duoNumber = document.getElementById("duo-number");
+const duoNames = document.getElementById("duo-names");
+const duoMessage = document.getElementById("duo-message");
+const revealButton = document.getElementById("reveal-button");
+const allDuos = document.getElementById("all-duos");
+const allDuosList = document.getElementById("all-duos-list");
+const wordsButton = document.getElementById("words-button");
 
-const nextPlayerScreen = document.querySelector("#next-player-screen");
-const nextPlayerMessage = document.querySelector("#next-player-message");
-const readyButton = document.querySelector("#ready-button");
+const wordPlayerMessage = document.getElementById("word-player-message");
+const wordPrivateScreen = document.getElementById("word-private-screen");
+const wordPlayerName = document.getElementById("word-player-name");
+const wordsForm = document.getElementById("words-form");
+const wordInputs = document.getElementById("word-inputs");
+const addWordButton = document.getElementById("add-word-button");
+const wordsCount = document.getElementById("words-count");
+const wordsMessage = document.getElementById("words-message");
+const nextPlayerScreen = document.getElementById("next-player-screen");
+const nextPlayerMessage = document.getElementById("next-player-message");
+const readyButton = document.getElementById("ready-button");
+const wordsFinishedScreen = document.getElementById("words-finished-screen");
+const prepareSaladButton = document.getElementById("prepare-salad-button");
 
-const wordsFinishedScreen = document.querySelector("#words-finished-screen");
-const prepareSaladButton = document.querySelector("#prepare-salad-button");
+const gameDuoLabel = document.getElementById("game-duo-label");
+const gameMimerLabel = document.getElementById("game-mimer-label");
+const gameMimerName = document.getElementById("game-mimer-name");
+const gameTimer = document.getElementById("game-timer");
+const gameWordContainer = document.getElementById("game-word-container");
+const gameWord = document.getElementById("game-word");
+const gameMessage = document.getElementById("game-message");
+const revealWordButton = document.getElementById("reveal-word-button");
+const gameActions = document.getElementById("game-actions");
+const guessedButton = document.getElementById("guessed-button");
+const passButton = document.getElementById("pass-button");
+const gameScore = document.getElementById("game-score");
+const nextTurnButton = document.getElementById("next-turn-button");
+
+/* 2. DONNÉES DU JEU */
 
 const players = [];
 
 let duos = [];
 let currentDuoIndex = 0;
+let currentDuoRevealIndex = 0;
 let currentWordPlayerIndex = 0;
+
 let submittedWords = [];
 let saladWords = [];
 
-// INSCRIPTION DES JOUEURS
+let scores = [];
+let duoRoleTurns = [];
+
+let currentWord = null;
+let secondsRemaining = 60;
+let timerInterval = null;
+let turnFinished = false;
+let gameEnded = false;
+
+/* 2. CRÉATION DES NOUVEAUX ÉLÉMENTS DE JEU */
+
+const scoreBoard = document.createElement("section");
+scoreBoard.className = "score-board";
+scoreBoard.setAttribute("aria-label", "Scores des duos");
+
+const scoreBoardTitle = document.createElement("h2");
+scoreBoardTitle.className = "score-board-title";
+scoreBoardTitle.textContent = "Le classement en direct";
+
+const scoreBoardList = document.createElement("div");
+scoreBoardList.className = "score-board-list";
+
+scoreBoard.append(scoreBoardTitle, scoreBoardList);
+
+gameScore.insertAdjacentElement("afterend", scoreBoard);
+
+const stopGameButton = document.createElement("button");
+stopGameButton.type = "button";
+stopGameButton.className = "stop-game-button";
+stopGameButton.textContent = "Arrêter la partie";
+
+scoreBoard.insertAdjacentElement("afterend", stopGameButton);
+
+/* 4. FONCTIONS UTILITAIRES */
+
+function showScreen(screenToShow) {
+    const screens = [
+        homeScreen,
+        playersScreen,
+        duosScreen,
+        wordsScreen,
+        gameScreen
+    ];
+
+    screens.forEach((screen) => {
+        if (screen) {
+            screen.hidden = screen !== screenToShow;
+        }
+    });
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+
+function normalizeWord(word) {
+    return word
+        .trim()
+        .toLocaleLowerCase("fr")
+        .normalize("NFD")
+        .replace(/[\u0200-\u026f]/g, "");
+}
+
+function showMessage(element, message, isError = false) {
+    if (!element) return;
+
+    element.textContent = message;
+    element.classList.toggle("error-message", isError);
+}
+
+/* 5. INSCRIPTION DES JOUEURS */
 
 startButton.addEventListener("click", () => {
-    homeScreen.hidden = true;
-    playersScreen.hidden = false;
-    playerInput.focus();
+    showScreen(playersScreen);
+    playerNameInput.focus();
 });
 
 backButton.addEventListener("click", () => {
-    playersScreen.hidden = true;
-    homeScreen.hidden = false;
-    formMessage.textContent = "";
+    showScreen(homeScreen);
 });
+
+function updatePlayersDisplay() {
+    playersList.replaceChildren();
+
+    players.forEach((player, index) => {
+        const item = document.createElement("li");
+        const name = document.createElement("span");
+        const removeButton = document.createElement("button");
+
+        name.textContent = player;
+
+        removeButton.type = "button";
+        removeButton.textContent = "Retirer";
+
+        removeButton.addEventListener("click", () => {
+            players.splice(index, 1);
+            updatePlayersDisplay();
+        });
+
+        item.append(name, removeButton);
+        playersList.appendChild(item);
+    });
+
+    playerCount.textContent = String(players.length);
+
+    const validCount =
+        players.length >= 4 && players.length % 2 === 0;
+
+    continueButton.disabled = !validCount;
+
+    if (players.length < 4) {
+        showMessage(formMessage, "Il faut au moins 4 joueurs.");
+    } else if (players.length % 2 !== 0) {
+        showMessage(formMessage, "Ajoutez un joueur pour avoir un nombre pair.");
+    } else {
+        showMessage(formMessage, "Parfait ! Vous pouvez continuer.");
+    }
+}
 
 playersForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const name = playerInput.value.trim();
+    const name = playerNameInput.value.trim();
 
     if (!name) {
-        formMessage.textContent = "Entre un prénom ou un pseudo.";
-        playerInput.focus();
+        showMessage(formMessage, "Entre un prénom.", true);
         return;
     }
 
-    const alreadyExists = players.some(
-        (player) =>
-            player.toLocaleLowerCase("fr") ===
-            name.toLocaleLowerCase("fr")
+    const exists = players.some(
+        (player) => player.toLocaleLowerCase("fr") === name.toLocaleLowerCase("fr")
     );
 
-    if (alreadyExists) {
-        formMessage.textContent = "Ce nom est déjà dans la liste.";
-        playerInput.focus();
+    if (exists) {
+        showMessage(formMessage, "Ce prénom est déjà dans la liste.", true);
         return;
     }
 
     players.push(name);
-    playerInput.value = "";
-    formMessage.textContent = "";
+    playerNameInput.value = "";
 
-    renderPlayers();
-    playerInput.focus();
+    updatePlayersDisplay();
+    playerNameInput.focus();
 });
-
-function renderPlayers() {
-    playersList.replaceChildren();
-
-    players.forEach((name, index) => {
-        const item = document.createElement("li");
-        item.className = "player-item";
-
-        const playerName = document.createElement("span");
-        playerName.className = "player-name";
-        playerName.textContent = `${index + 1}. ${name}`;
-
-        const removeButton = document.createElement("button");
-        removeButton.className = "remove-player";
-        removeButton.type = "button";
-        removeButton.textContent = "Supprimer";
-        removeButton.setAttribute("aria-label", `Supprimer ${name}`);
-
-        removeButton.addEventListener("click", () => {
-            players.splice(index, 1);
-            formMessage.textContent = "";
-            renderPlayers();
-        });
-
-        item.append(playerName, removeButton);
-        playersList.append(item);
-    });
-
-    const count = players.length;
-    playerCount.textContent =
-        `${count} joueur${count > 1 ? "s" : ""}`;
-
-    continueButton.disabled = !(count >= 4 && count % 2 === 0);
-}
-
-// TIRAGE ALÉATOIRE DES DUOS
 
 continueButton.addEventListener("click", () => {
-    if (players.length < 4 || players.length % 2 !== 0) {
-        return;
-    }
+    if (players.length < 4 || players.length % 2 !== 0) return;
 
-    duos = createDuos(players);
-    currentDuoIndex = 0;
-
-    homeScreen.hidden = true;
-    playersScreen.hidden = true;
-    duosScreen.hidden = false;
-
-    allDuos.hidden = true;
-    allDuosList.replaceChildren();
-
-    duosDescription.textContent =
-        `${duos.length} duos vont être révélés. Que le suspense commence !`;
-
-    duoNumber.textContent = "À VOUS DE JOUER";
-    duoNames.replaceChildren();
-
-    const questionOne = document.createElement("span");
-    questionOne.textContent = "?";
-
-    const ampersand = document.createElement("span");
-    ampersand.className = "duo-ampersand";
-    ampersand.textContent = "&";
-
-    const questionTwo = document.createElement("span");
-    questionTwo.textContent = "?";
-
-    duoNames.append(questionOne, ampersand, questionTwo);
-
-    duoMessage.textContent = "Qui sera ton partenaire ?";
-
-    revealButton.hidden = false;
-    revealButton.querySelector(".button-label").textContent =
-        "Révéler le premier duo";
+    createDuos();
+    showScreen(duosScreen);
+    displayNextDuo();
 });
 
-function createDuos(names) {
-    const shuffledPlayers = [...names];
+/* 6. FORMATION DES DUOS */
 
-    for (let i = shuffledPlayers.length - 1; i > 0; i--) {
-        const randomIndex = Math.floor(Math.random() * (i + 1));
+function createDuos() {
+    const shuffledPlayers = shuffleArray([...players]);
 
-        [shuffledPlayers[i], shuffledPlayers[randomIndex]] =
-            [shuffledPlayers[randomIndex], shuffledPlayers[i]];
-    }
-
-    const result = [];
+    duos = [];
 
     for (let i = 0; i < shuffledPlayers.length; i += 2) {
-        result.push([
+        duos.push([
             shuffledPlayers[i],
             shuffledPlayers[i + 1]
         ]);
     }
 
-    return result;
+    currentDuoRevealIndex = 0;
+
+    allDuos.hidden = true;
+    wordsButton.hidden = true;
+    duoCard.hidden = false;
+
+    revealButton.hidden = false;
+    revealButton.disabled = false;
+    revealButton.textContent = "Découvrir le duo";
+
+    showMessage(duoDescription, "Découvrez les duos un par un !");
+    showMessage(duoMessage, "");
 }
 
-revealButton.addEventListener("click", () => {
-    if (currentDuoIndex >= duos.length) {
+function displayNextDuo() {
+    if (currentDuoRevealIndex >= duos.length) {
+        duoCard.hidden = true;
+        allDuos.hidden = false;
+        wordsButton.hidden = false;
+        revealButton.hidden = true;
+
+        displayAllDuos();
+        showMessage(duoMessage, "Tous les duos sont formés !");
         return;
     }
 
-    const duo = duos[currentDuoIndex];
+    const duo = duos[currentDuoRevealIndex];
 
-    duoNumber.textContent = `DUO ${currentDuoIndex + 1}`;
-    duoNames.replaceChildren();
+    duoNumber.textContent = `DUO ${currentDuoRevealIndex + 1}`;
+    duoNames.textContent = `${duo[0]} & ${duo[1]}`;
 
-    const firstPlayer = document.createElement("span");
-    firstPlayer.textContent = duo[0];
+    currentDuoRevealIndex++;
 
-    const ampersand = document.createElement("span");
-    ampersand.className = "duo-ampersand";
-    ampersand.textContent = "&";
+    revealButton.textContent =
+        currentDuoRevealIndex < duos.length
+            ? "Découvrir le duo suivant"
+            : "Voir tous les duos";
+}
 
-    const secondPlayer = document.createElement("span");
-    secondPlayer.textContent = duo[1];
-
-    duoNames.append(firstPlayer, ampersand, secondPlayer);
-
-    duoMessage.textContent = "Votre aventure commence ensemble !";
-
-    duoCard.classList.remove("reveal");
-    void duoCard.offsetWidth;
-    duoCard.classList.add("reveal");
-
-    currentDuoIndex++;
-
-    if (currentDuoIndex < duos.length) {
-        revealButton.querySelector(".button-label").textContent =
-            "Découvrir le duo suivant";
-    } else {
-        revealButton.hidden = true;
-        duosDescription.textContent =
-            "Tous les partenaires ont été tirés au sort !";
-
-        displayAllDuos();
-    }
-});
+revealButton.addEventListener("click", displayNextDuo);
 
 function displayAllDuos() {
     allDuosList.replaceChildren();
 
     duos.forEach((duo, index) => {
         const item = document.createElement("li");
-        item.textContent =
-            `Duo ${index + 1} : ${duo[0]} & ${duo[1]}`;
-
-        allDuosList.append(item);
+        item.textContent = `Duo ${index + 1} : ${duo[0]} & ${duo[1]}`;
+        allDuosList.appendChild(item);
     });
-
-    allDuos.hidden = false;
 }
-
-// DÉMARRAGE DE LA SAISIE PRIVÉE
 
 wordsButton.addEventListener("click", () => {
-    duosScreen.hidden = true;
-    wordsScreen.hidden = false;
-
     currentWordPlayerIndex = 0;
     submittedWords = [];
-    saladWords = [];
 
-    showPassPhoneScreen();
+    showScreen(wordsScreen);
+    showWordEntry();
 });
 
-function showPassPhoneScreen() {
-    wordPrivateScreen.hidden = true;
-    nextPlayerScreen.hidden = false;
-    wordsFinishedScreen.hidden = true;
+/* 7. SAISIE DES MOTS */
 
-    nextPlayerMessage.textContent =
-        `Passe le téléphone à ${players[currentWordPlayerIndex]}. ` +
-        "Assure-toi que personne ne regarde l'écran.";
-
-    readyButton.textContent = "Je suis prêt";
-}
-
-readyButton.addEventListener("click", () => {
-    if (currentWordPlayerIndex >= players.length) {
-        return;
-    }
-
+function showWordEntry() {
+    wordPrivateScreen.hidden = false;
     nextPlayerScreen.hidden = true;
     wordsFinishedScreen.hidden = true;
-    wordPrivateScreen.hidden = false;
 
-    wordPlayerName.textContent =
-        `À toi de jouer, ${players[currentWordPlayerIndex]} !`;
+    const player = players[currentWordPlayerIndex];
 
+    wordPlayerName.textContent = player;
     wordPlayerMessage.textContent =
-        "Saisis tes mots sans les montrer aux autres.";
-
-    resetWordInputs();
-});
-
-function resetWordInputs() {
-    wordInputs.replaceChildren();
-
-    for (let i = 1; i <= 3; i++) {
-        createWordInput(i);
-    }
+        `C'est au tour de ${player} de proposer ses mots.`;
 
     wordsMessage.textContent = "";
-    updateWordCount();
+    wordInputs.replaceChildren();
 
-    wordInputs.querySelector("input")?.focus();
+    for (let i = 0; i < 2; i++) {
+        addWordInput();
+    }
+
+    updateWordCount();
 }
 
-function createWordInput(number) {
+function addWordInput() {
     const input = document.createElement("input");
 
     input.type = "text";
     input.className = "word-input";
-    input.placeholder = `Mot ${number}`;
-    input.maxLength = 40;
-    input.required = true;
+    input.name = "word";
+    input.maxLength = 50;
     input.autocomplete = "off";
+    input.placeholder = `Mot ${wordInputs.children.length + 1}`;
 
-    input.addEventListener("input", updateWordCount);
-    wordInputs.append(input);
+    wordInputs.appendChild(input);
+}
+
+function updateWordCount() {
+    const inputs = [...wordInputs.querySelectorAll("input")];
+    const filled = inputs.filter((input) => input.value.trim() !== "").length;
+
+    wordsCount.textContent = `${filled} mot(s) saisi(s)`;
 }
 
 addWordButton.addEventListener("click", () => {
-    const inputs = wordInputs.querySelectorAll(".word-input");
-
-    if (inputs.length >= 5) {
-        wordsMessage.textContent = "Tu as atteint la limite de 5 mots.";
+    if (wordInputs.querySelectorAll("input").length >= 5) {
+        showMessage(wordsMessage, "5 mots maximum.");
         return;
     }
 
-    createWordInput(inputs.length + 1);
+    addWordInput();
     updateWordCount();
 
-    const updatedInputs = wordInputs.querySelectorAll(".word-input");
-    updatedInputs[updatedInputs.length - 1].focus();
+    const inputs = wordInputs.querySelectorAll("input");
+    inputs[inputs.length - 1].focus();
 });
 
-function updateWordCount() {
-    const inputs = [...wordInputs.querySelectorAll(".word-input")];
-
-    const filledCount = inputs.filter(
-        (input) => input.value.trim() !== ""
-    ).length;
-
-    wordsCount.textContent =
-        `${filledCount}/5 mots saisis — 3 minimum, 5 maximum.`;
-
-    addWordButton.disabled = inputs.length >= 5;
-}
+wordInputs.addEventListener("input", updateWordCount);
 
 wordsForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const inputs = [...wordInputs.querySelectorAll(".word-input")];
-
-    const words = inputs
+    const enteredWords = [...wordInputs.querySelectorAll("input")]
         .map((input) => input.value.trim())
-        .filter((word) => word !== "");
+        .filter(Boolean);
 
-    if (words.length < 3) {
-        wordsMessage.textContent = "Il faut saisir au moins 3 mots.";
+    if (enteredWords.length < 2 || enteredWords.length > 5) {
+        showMessage(wordsMessage, "Entre entre 2 et 5 mots.", true);
         return;
     }
 
-    if (words.length > 5) {
-        wordsMessage.textContent = "Tu ne peux pas saisir plus de 5 mots.";
-        return;
-    }
-
-    submittedWords.push(...words);
-
-    // Supprime les champs visibles avant de passer le téléphone.
-    wordInputs.replaceChildren();
-    wordsMessage.textContent = "";
-
+    submittedWords.push(...enteredWords);
     currentWordPlayerIndex++;
 
     if (currentWordPlayerIndex < players.length) {
-        showPassPhoneScreen();
+        wordPrivateScreen.hidden = true;
+        nextPlayerScreen.hidden = false;
+        wordsFinishedScreen.hidden = true;
+
+        const nextPlayer = players[currentWordPlayerIndex];
+
+        nextPlayerMessage.textContent = `Passe le téléphone à ${nextPlayer}.`;
+        readyButton.textContent = `C'est parti, ${nextPlayer} !`;
     } else {
         wordPrivateScreen.hidden = true;
         nextPlayerScreen.hidden = true;
         wordsFinishedScreen.hidden = false;
-
-        wordsFinishedScreen.querySelector("h2").textContent =
-            "Le saladier est presque prêt !";
-
-        wordsFinishedScreen.querySelector("p").textContent =
-            "Tous les joueurs ont terminé. Prêts à jouer ?";
     }
 });
 
-// PRÉPARATION SECRÈTE DU SALADIER
+readyButton.addEventListener("click", showWordEntry);
+
+/* 8. PRÉPARATION DU SALADIER */
 
 prepareSaladButton.addEventListener("click", () => {
-    const uniqueWords = new Map();
+    const uniqueWords = [];
+    const seenWords = new Set();
 
     submittedWords.forEach((word) => {
-        const key = word
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLocaleLowerCase("fr");
+        const cleaned = word.trim();
+        const key = normalizeWord(cleaned);
 
-        if (!uniqueWords.has(key)) {
-            uniqueWords.set(key, word);
+        if (key && !seenWords.has(key)) {
+            seenWords.add(key);
+            uniqueWords.push(cleaned);
         }
     });
 
-    saladWords = [...uniqueWords.values()];
-
-    for (let i = saladWords.length - 1; i > 0; i--) {
-        const randomIndex = Math.floor(Math.random() * (i + 1));
-
-        [saladWords[i], saladWords[randomIndex]] =
-            [saladWords[randomIndex], saladWords[i]];
+    if (uniqueWords.length === 0) {
+        showMessage(wordPlayerMessage, "Aucun mot disponible.");
+        return;
     }
 
-    // Ne jamais afficher la liste des mots ici.
-    wordsFinishedScreen.querySelector("h2").textContent =
-        "Le saladier est prêt !";
+    saladWords = shuffleArray([...uniqueWords]);
 
-    wordsFinishedScreen.querySelector("p").textContent =
-        `${saladWords.length} mots sont prêts. Le jeu peut bientôt commencer !`;
+    scores = duos.map(() => 0);
+    duoRoleTurns = duos.map(() => 0);
 
-    prepareSaladButton.textContent = "Saladier préparé !";
-    prepareSaladButton.disabled = true;
+    currentDuoIndex = 0;
+    gameEnded = false;
+
+    startGame();
 });
+
+/* 9. DÉBUT ET ORGANISATION DES TOURS */
+
+function startGame() {
+    showScreen(gameScreen);
+    scoreBoard.hidden = false;
+    stopGameButton.hidden = false;
+
+    updateScoreBoard();
+    startTurn();
+}
+
+function startTurn() {
+    stopTimer();
+
+    if (gameEnded || saladWords.length === 0) {
+        endGame("Tous les mots ont été devinés !");
+        return;
+    }
+
+    turnFinished = false;
+    currentWord = null;
+    secondsRemaining = 60;
+
+    const duo = duos[currentDuoIndex];
+    const mimerIndex = duoRoleTurns[currentDuoIndex] % 2;
+    const mimer = duo[mimerIndex];
+    const guesser = duo[1 - mimerIndex];
+
+    gameDuoLabel.textContent =
+        `Duo ${currentDuoIndex + 1} — ${mimer} mime, ${guesser} devine !`;
+
+    gameMimerLabel.textContent = "C'est à toi de mimer";
+    gameMimerName.textContent = mimer;
+
+    gameTimer.textContent = "60";
+    gameTimer.classList.remove("timer-warning");
+
+    gameWord.textContent = "";
+    gameWordContainer.hidden = true;
+
+    gameMessage.textContent = "Prêts ? Révélez le premier mot pour commencer.";
+
+    revealWordButton.hidden = false;
+    revealWordButton.disabled = false;
+    revealWordButton.textContent = "Révéler le mot";
+
+    gameActions.hidden = true;
+    nextTurnButton.hidden = true;
+
+    updateScoreBoard();
+}
+
+/* 10. RÉVÉLATION DES MOTS ET CHRONOMÈTRE */
+
+revealWordButton.addEventListener("click", () => {
+    if (turnFinished || gameEnded) return;
+
+    if (saladWords.length === 0) {
+        endGame("Tous les mots ont été devinés !");
+        return;
+    }
+
+    currentWord = saladWords.shift();
+
+    gameWord.textContent = currentWord;
+    gameWordContainer.hidden = false;
+
+    revealWordButton.hidden = true;
+    gameActions.hidden = false;
+
+    gameMessage.textContent =
+        "Mime sans parler et sans montrer le mot à ton partenaire !";
+
+    if (!timerInterval) {
+        startTimer();
+    }
+});
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        secondsRemaining--;
+        gameTimer.textContent = String(secondsRemaining);
+
+        if (secondsRemaining <= 10) {
+            gameTimer.classList.add("timer-warning");
+        }
+
+        if (secondsRemaining <= 0) {
+            finishTurn();
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+/* 11. MOT DEVINÉ */
+
+guessedButton.addEventListener("click", () => {
+    if (turnFinished || gameEnded || currentWord === null) return;
+
+    scores[currentDuoIndex]++;
+    currentWord = null;
+
+    gameWord.textContent = "";
+    gameWordContainer.hidden = true;
+    gameActions.hidden = true;
+
+    updateScoreBoard();
+
+    if (saladWords.length === 0) {
+        endGame("Tous les mots ont été devinés !");
+        return;
+    }
+
+    revealWordButton.hidden = false;
+    revealWordButton.textContent = "Mot suivant";
+    gameMessage.textContent = "Bien joué ! Un point pour votre duo.";
+});
+
+/* 12. MOT PASSÉ */
+
+passButton.addEventListener("click", () => {
+    if (turnFinished || gameEnded || currentWord === null) return;
+
+    saladWords.push(currentWord);
+    currentWord = null;
+
+    gameWord.textContent = "";
+    gameWordContainer.hidden = true;
+    gameActions.hidden = true;
+
+    revealWordButton.hidden = false;
+    revealWordButton.textContent = "Mot suivant";
+
+    gameMessage.textContent = "Mot passé ! Il reviendra plus tard.";
+});
+
+/* 12. FIN DU TOUR ET ROTATION DES DUOS */
+
+function finishTurn() {
+    if (turnFinished || gameEnded) return;
+
+    turnFinished = true;
+    stopTimer();
+
+    if (currentWord !== null) {
+        saladWords.push(currentWord);
+        currentWord = null;
+    }
+
+    gameTimer.textContent = "0";
+    gameTimer.classList.add("timer-warning");
+
+    gameWord.textContent = "";
+    gameWordContainer.hidden = true;
+    gameActions.hidden = true;
+    revealWordButton.hidden = true;
+
+    gameMessage.textContent = "Temps écoulé !";
+
+    /* Le duo a terminé son tour : son prochain mime sera l'autre joueur. */
+    duoRoleTurns[currentDuoIndex]++;
+
+    nextTurnButton.hidden = false;
+    nextTurnButton.textContent = "Au duo suivant";
+}
+
+nextTurnButton.addEventListener("click", () => {
+    if (gameEnded) return;
+
+    if (saladWords.length === 0) {
+        endGame("Tous les mots ont été devinés !");
+        return;
+    }
+
+    /* Le prochain duo prend son tour. Après le dernier, retour au premier. */
+    currentDuoIndex = (currentDuoIndex + 1) % duos.length;
+
+    startTurn();
+});
+
+/* 14. TABLEAU DES SCORES EN DIRECT */
+
+function updateScoreBoard() {
+    scoreBoardList.replaceChildren();
+
+    duos.forEach((duo, index) => {
+        const item = document.createElement("div");
+        item.className = "score-team";
+
+        if (index === currentDuoIndex && !gameEnded) {
+            item.classList.add("score-team-active");
+        }
+
+        const teamInfo = document.createElement("div");
+        teamInfo.className = "score-team-info";
+
+        const teamNumber = document.createElement("span");
+        teamNumber.className = "score-team-number";
+        teamNumber.textContent = `DUO ${index + 1}`;
+
+        const teamNames = document.createElement("span");
+        teamNames.className = "score-team-names";
+        teamNames.textContent = duo.join(" & ");
+
+        teamInfo.append(teamNumber, teamNames);
+
+        const points = document.createElement("strong");
+        points.className = "score-team-points";
+        points.textContent = String(scores[index] ?? 0);
+
+        const pointsLabel = document.createElement("span");
+        pointsLabel.className = "score-team-label";
+        pointsLabel.textContent = "pts";
+
+        const scoreValue = document.createElement("div");
+        scoreValue.className = "score-team-value";
+        scoreValue.append(points, pointsLabel);
+
+        item.append(teamInfo, scoreValue);
+        scoreBoardList.appendChild(item);
+    });
+
+    gameScore.textContent = "Points gagnés en devinant les mots";
+}
+
+/* 15. ARRÊT VOLONTAIRE */
+
+stopGameButton.addEventListener("click", () => {
+    if (gameEnded) return;
+
+    const confirmed = window.confirm(
+        "Veux-tu vraiment arrêter la partie et afficher le classement ?"
+    );
+
+    if (confirmed) {
+        endGame("La partie a été arrêtée par les joueurs.");
+    }
+});
+
+/* 16. CLASSEMENT FINAL */
+
+function endGame(message) {
+    if (gameEnded) return;
+
+    gameEnded = true;
+    turnFinished = true;
+    stopTimer();
+
+    gameScreen.hidden = true;
+    scoreBoard.hidden = true;
+    stopGameButton.hidden = true;
+
+    const oldResults = document.getElementById("results-screen");
+
+    if (oldResults) {
+        oldResults.remove();
+    }
+
+    const results = duos
+        .map((duo, index) => ({
+            duoNumber: index + 1,
+            names: duo,
+            score: scores[index] ?? 0
+        }))
+        .sort((a, b) => b.score - a.score);
+
+    const resultsScreen = document.createElement("section");
+    resultsScreen.id = "results-screen";
+    resultsScreen.className = "game-screen results-screen";
+
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "eyebrow";
+    eyebrow.textContent = "SÉNÉGAL CHALLENGE";
+
+    const title = document.createElement("h1");
+    title.className = "game-title";
+    title.textContent = "Fin de la partie";
+
+    const description = document.createElement("p");
+    description.className = "game-description";
+    description.textContent = message;
+
+    resultsScreen.append(eyebrow, title, description);
+
+    if (results.length > 0) {
+        const highestScore = results[0].score;
+        const winners = results.filter(
+            (result) => result.score === highestScore
+        );
+
+        const winnerCard = document.createElement("div");
+        winnerCard.className = "winner-card";
+
+        const winnerLabel = document.createElement("p");
+        winnerLabel.className = "winner-label";
+        winnerLabel.textContent =
+            winners.length > 1 ? "DUOS À ÉGALITÉ" : "DUO GAGNANT";
+
+        const winnerNames = document.createElement("h2");
+        winnerNames.className = "winner-names";
+        winnerNames.textContent = winners
+            .map((winner) => winner.names.join(" & "))
+            .join(" / ");
+
+        const winnerPoints = document.createElement("p");
+        winnerPoints.className = "winner-points";
+        winnerPoints.textContent = `${highestScore} point(s)`;
+
+        winnerCard.append(winnerLabel, winnerNames, winnerPoints);
+        resultsScreen.appendChild(winnerCard);
+    }
+
+    const rankingTitle = document.createElement("h2");
+    rankingTitle.className = "ranking-title";
+    rankingTitle.textContent = "Classement final";
+
+    const rankingList = document.createElement("ol");
+    rankingList.className = "results-ranking";
+
+    results.forEach((result, index) => {
+        const item = document.createElement("li");
+        item.className = "results-ranking-item";
+
+        if (result.score === results[0].score) {
+            item.classList.add("results-ranking-winner");
+        }
+
+        const rank = document.createElement("span");
+        rank.className = "ranking-position";
+        rank.textContent = String(index + 1).padStart(2, "0");
+
+        const team = document.createElement("span");
+        team.className = "ranking-team";
+        team.textContent =
+            `Duo ${result.duoNumber} — ${result.names.join(" & ")}`;
+
+        const points = document.createElement("strong");
+        points.className = "ranking-points";
+        points.textContent = `${result.score} pts`;
+
+        item.append(rank, team, points);
+        rankingList.appendChild(item);
+    });
+
+    resultsScreen.append(rankingTitle, rankingList);
+
+    const restartButton = document.createElement("button");
+    restartButton.type = "button";
+    restartButton.className = "button button-primary restart-button";
+    restartButton.textContent = "Rejouer";
+
+    restartButton.addEventListener("click", () => {
+        stopTimer();
+
+        players.length = 0;
+        duos = [];
+        submittedWords = [];
+        saladWords = [];
+        scores = [];
+        duoRoleTurns = [];
+
+        currentDuoIndex = 0;
+        currentDuoRevealIndex = 0;
+        currentWordPlayerIndex = 0;
+        currentWord = null;
+        gameEnded = false;
+        turnFinished = false;
+
+        resultsScreen.remove();
+
+        updatePlayersDisplay();
+        showScreen(homeScreen);
+    });
+
+    resultsScreen.appendChild(restartButton);
+
+    gameScreen.insertAdjacentElement("afterend", resultsScreen);
+    resultsScreen.hidden = false;
+}
+
+/* 17. INITIALISATION */
+
+showScreen(homeScreen);
+updatePlayersDisplay();

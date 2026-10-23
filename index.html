@@ -4,14 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sénégal Challenge : le jeu de mime et de devinettes entre amis.">
+
+    <meta
+        name="description"
+        content="Sénégal Challenge : le jeu de mime et de devinettes entre amis."
+    >
     <meta name="theme-color" content="#F7F4ED">
 
     <title>Sénégal Challenge — Mime, devine, rigole !</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
@@ -26,110 +34,9 @@
 
     <main>
 
-      
-<section class="duos-screen" id="duos-screen" hidden>
-    <p class="eyebrow">LE HASARD A PARLÉ !</p>
-
-    <h1 class="screen-title">
-        Qui sera <span>avec qui ?</span>
-    </h1>
-
-    <p class="screen-description" id="duos-description">
-        Les équipes vont être révélées une par une...
-    </p>
-
-    <div class="duo-card" id="duo-card">
-        <p class="duo-number" id="duo-number">DUO 1</p>
-
-        <div class="duo-names" id="duo-names">
-            <span>?</span>
-            <span class="duo-ampersand">&</span>
-            <span>?</span>
-        </div>
-
-        <p class="duo-message" id="duo-message">
-            Prêts à découvrir votre partenaire ?
-        </p>
-    </div>
-
-    <button class="start-button continue-button" id="reveal-button" type="button">
-        <span class="button-label">Révéler le premier duo</span>
-    </button>
-
-    <div class="all-duos" id="all-duos" hidden>
-        <h2>Tous les duos</h2>
-        <ul id="all-duos-list"></ul>
-
-        <button class="start-button continue-button" id="words-button" type="button">
-            <span class="button-label">Préparer le saladier</span>
-        </button>
-    </div>
-</section>
-
-
-<section id="words-screen" class="players-screen" hidden>
-    <div class="section-heading">
-        <p class="eyebrow">LE SALADIER</p>
-        <h1>Place à ton imagination !</h1>
-        <p id="word-player-message">
-            Prépare tes mots en secret.
-        </p>
-    </div>
-
-    <div id="word-private-screen">
-        <div class="word-lock">
-            🔒 Saisie privée
-        </div>
-
-        <h2 id="word-player-name">À toi de jouer !</h2>
-        <p>Choisis entre 3 et 5 mots que les autres devront deviner.</p>
-
-        <form id="words-form">
-            <div id="word-inputs">
-                <input type="text" class="word-input"
-                    placeholder="Mot 1" maxlength="40" required>
-                <input type="text" class="word-input"
-                    placeholder="Mot 2" maxlength="40" required>
-                <input type="text" class="word-input"
-                    placeholder="Mot 3" maxlength="40" required>
-            </div>
-
-            <button type="button" id="add-word-button"
-                class="button button-secondary">
-                Ajouter un mot
-            </button>
-
-            <p id="words-count">3 mots minimum, 5 maximum.</p>
-            <p id="words-message" role="status"></p>
-
-            <button type="submit" class="button button-primary">
-                Valider mes mots
-            </button>
-        </form>
-    </div>
-
-    <div id="next-player-screen" hidden>
-        <h2>Mots enregistrés !</h2>
-        <p id="next-player-message">
-            Passe le téléphone au joueur suivant.
-        </p>
-        <button type="button" id="ready-button"
-            class="button button-primary">
-            Je suis prêt
-        </button>
-    </div>
-
-    <div id="words-finished-screen" hidden>
-        <h2>Le saladier est prêt !</h2>
-        <p>Tous les joueurs ont terminé leur saisie.</p>
-        <button type="button" id="prepare-salad-button"
-            class="button button-primary">
-            Préparer le saladier
-        </button>
-    </div>
-</section>
-
-
+        <!-- =========================
+             1. ACCUEIL
+        ========================== -->
         <section class="hero" id="home-screen">
             <p class="eyebrow">TON GROUPE. TES RÈGLES. TON DÉLIRE.</p>
 
@@ -144,22 +51,53 @@
                 et amuse-toi !
             </p>
 
-            <button class="start-button" id="start-button" type="button">
+            <button
+                class="start-button"
+                id="start-button"
+                type="button"
+            >
                 <span class="button-label">Commencer à jouer</span>
-                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+                <svg
+                    class="button-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
                     <polygon points="6 3 20 12 6 21 6 3"></polygon>
                 </svg>
             </button>
 
             <p class="hero-note">
-                Un téléphone <span aria-hidden="true">·</span>
-                Des amis <span aria-hidden="true">·</span>
+                Un téléphone
+                <span aria-hidden="true">·</span>
+                Des amis
+                <span aria-hidden="true">·</span>
                 Des fous rires
             </p>
         </section>
 
-        <section class="players-screen" id="players-screen" hidden>
-            <button class="back-button" id="back-button" type="button">
+
+        <!-- =========================
+             2. INSCRIPTION DES JOUEURS
+        ========================== -->
+        <section
+            class="players-screen"
+            id="players-screen"
+            hidden
+        >
+            <button
+                class="back-button"
+                id="back-button"
+                type="button"
+            >
                 ← Retour
             </button>
 
@@ -189,34 +127,344 @@
                         autocomplete="off"
                     >
 
-                    <button class="add-button" type="submit">
+                    <button
+                        class="add-button"
+                        type="submit"
+                    >
                         Ajouter +
                     </button>
                 </div>
 
-                <p class="form-message" id="form-message" aria-live="polite"></p>
+                <p
+                    class="form-message"
+                    id="form-message"
+                    aria-live="polite"
+                ></p>
             </form>
 
             <div class="players-list-section">
                 <div class="players-list-heading">
                     <h2>Les participants</h2>
-                    <span class="player-count" id="player-count">0 joueur</span>
+
+                    <span
+                        class="player-count"
+                        id="player-count"
+                    >
+                        0 joueur
+                    </span>
                 </div>
 
-                <ul class="players-list" id="players-list"></ul>
+                <ul
+                    class="players-list"
+                    id="players-list"
+                ></ul>
 
                 <p class="players-hint">
                     Il faut au moins 4 joueurs et un nombre pair pour jouer.
                 </p>
             </div>
 
-            <button class="start-button continue-button" id="continue-button" type="button" disabled>
+            <button
+                class="start-button continue-button"
+                id="continue-button"
+                type="button"
+                disabled
+            >
                 <span class="button-label">Former les duos</span>
-                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+                <svg
+                    class="button-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
                     <polygon points="6 3 20 12 6 21 6 3"></polygon>
                 </svg>
             </button>
         </section>
+
+
+        <!-- =========================
+             3. RÉVÉLATION DES DUOS
+        ========================== -->
+        <section
+            class="duos-screen"
+            id="duos-screen"
+            hidden
+        >
+            <p class="eyebrow">LE HASARD A PARLÉ !</p>
+
+            <h1 class="screen-title">
+                Qui sera <span>avec qui ?</span>
+            </h1>
+
+            <p
+                class="screen-description"
+                id="duos-description"
+            >
+                Les équipes vont être révélées une par une...
+            </p>
+
+            <div class="duo-card" id="duo-card">
+                <p class="duo-number" id="duo-number">DUO 1</p>
+
+                <div class="duo-names" id="duo-names">
+                    <span>?</span>
+                    <span class="duo-ampersand">&</span>
+                    <span>?</span>
+                </div>
+
+                <p class="duo-message" id="duo-message">
+                    Prêts à découvrir votre partenaire ?
+                </p>
+            </div>
+
+            <button
+                class="start-button continue-button"
+                id="reveal-button"
+                type="button"
+            >
+                <span class="button-label">Révéler le premier duo</span>
+            </button>
+
+            <div class="all-duos" id="all-duos" hidden>
+                <h2>Tous les duos</h2>
+
+                <ul id="all-duos-list"></ul>
+
+                <button
+                    class="start-button continue-button"
+                    id="words-button"
+                    type="button"
+                >
+                    <span class="button-label">Préparer le saladier</span>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- =========================
+             4. SAISIE PRIVÉE DES MOTS
+        ========================== -->
+        <section
+            id="words-screen"
+            class="players-screen"
+            hidden
+        >
+            <div class="section-heading">
+                <p class="eyebrow">LE SALADIER</p>
+
+                <h1>Place à ton imagination !</h1>
+
+                <p id="word-player-message">
+                    Prépare tes mots en secret.
+                </p>
+            </div>
+
+            <div id="word-private-screen">
+                <div class="word-lock">
+                    🔒 Saisie privée
+                </div>
+
+                <h2 id="word-player-name">À toi de jouer !</h2>
+
+                <p>
+                    Choisis entre 3 et 5 mots que les autres devront deviner.
+                </p>
+
+                <form id="words-form">
+                    <div id="word-inputs">
+                        <input
+                            type="text"
+                            class="word-input"
+                            name="word"
+                            placeholder="Mot 1"
+                            maxlength="40"
+                            required
+                        >
+
+                        <input
+                            type="text"
+                            class="word-input"
+                            name="word"
+                            placeholder="Mot 2"
+                            maxlength="40"
+                            required
+                        >
+
+                        <input
+                            type="text"
+                            class="word-input"
+                            name="word"
+                            placeholder="Mot 3"
+                            maxlength="40"
+                            required
+                        >
+                    </div>
+
+                    <button
+                        type="button"
+                        id="add-word-button"
+                        class="button button-secondary"
+                    >
+                        Ajouter un mot
+                    </button>
+
+                    <p id="words-count">
+                        3 mots minimum, 5 maximum.
+                    </p>
+
+                    <p
+                        id="words-message"
+                        role="status"
+                    ></p>
+
+                    <button
+                        type="submit"
+                        class="button button-primary"
+                    >
+                        Valider mes mots
+                    </button>
+                </form>
+            </div>
+
+            <div id="next-player-screen" hidden>
+                <h2>Mots enregistrés !</h2>
+
+                <p id="next-player-message">
+                    Passe le téléphone au joueur suivant.
+                </p>
+
+                <button
+                    type="button"
+                    id="ready-button"
+                    class="button button-primary"
+                >
+                    Je suis prêt
+                </button>
+            </div>
+
+            <div id="words-finished-screen" hidden>
+                <h2>Le saladier est prêt !</h2>
+
+                <p>Tous les joueurs ont terminé leur saisie.</p>
+
+                <button
+                    type="button"
+                    id="prepare-salad-button"
+                    class="button button-primary"
+                >
+                    Préparer le saladier
+                </button>
+            </div>
+        </section>
+
+
+        <!-- =========================
+             5. ÉCRAN DE JEU
+        ========================== -->
+        <section
+            id="game-screen"
+            class="game-screen"
+            hidden
+        >
+            <p class="eyebrow">SÉNÉGAL CHALLENGE</p>
+
+            <h1 class="game-title">À toi de mimer !</h1>
+
+            <p
+                id="game-duo-label"
+                class="game-description"
+            >
+                Duo 1
+            </p>
+
+            <div class="game-player-card">
+                <p id="game-mimer-label">
+                    C'est à toi de mimer
+                </p>
+
+                <h2 id="game-mimer-name">Joueur</h2>
+            </div>
+
+            <div
+                id="game-timer"
+                class="game-timer"
+                aria-live="off"
+            >
+                60
+            </div>
+
+            <p>secondes restantes</p>
+
+            <div
+                id="game-word-container"
+                class="game-word-container"
+                hidden
+            >
+                <p>FAIS DEVINER CE MOT</p>
+                <h2 id="game-word"></h2>
+            </div>
+
+            <p
+                id="game-message"
+                class="game-message"
+                aria-live="polite"
+            >
+                Prêts ? Révélez le premier mot pour commencer.
+            </p>
+
+            <button
+                id="reveal-word-button"
+                class="button button-primary"
+                type="button"
+            >
+                Révéler le mot
+            </button>
+
+            <div id="game-actions" hidden>
+                <button
+                    id="guessed-button"
+                    class="button button-primary"
+                    type="button"
+                >
+                    Deviné ! (+1 point)
+                </button>
+
+                <button
+                    id="pass-button"
+                    class="button button-secondary"
+                    type="button"
+                >
+                    Passer
+                </button>
+            </div>
+
+            <div class="game-score-section">
+                <h2>Les points</h2>
+
+                <p id="game-score">
+                    Points gagnés en devinant les mots
+                </p>
+            </div>
+
+            <button
+                id="next-turn-button"
+                class="button button-primary"
+                type="button"
+                hidden
+            >
+                Au duo suivant
+            </button>
+        </section>
+
     </main>
 
     <footer class="footer">
@@ -224,3 +472,4 @@
     </footer>
 </body>
 </html>
+```
