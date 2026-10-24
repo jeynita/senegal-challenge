@@ -1541,3 +1541,247 @@ h1 span {
         transition-duration: 0.01ms !important;
     }
 }
+
+
+/* =========================================
+   SENEGAL CHALLENGE — SCOREBOARD PREMIUM
+   ========================================= */
+
+.score-board {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 22px;
+    padding: 16px;
+    overflow: hidden;
+
+    background: #102C3A;
+    color: #F7F4ED;
+
+    border: 1px solid rgba(246, 196, 83, 0.35);
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 24px rgba(16, 44, 58, 0.12),
+        0 3px 8px rgba(16, 44, 58, 0.06);
+}
+
+.score-board[hidden] {
+    display: none !important;
+}
+
+/* Titre du tableau */
+.score-board h2,
+.score-board h3,
+.score-board > p:first-child {
+    margin-top: 0;
+}
+
+/* Liste horizontale des équipes */
+.score-board-list {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 4px 2px 9px;
+    margin: 0;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+    scrollbar-color: #F6C453 transparent;
+}
+
+/* Carte de chaque duo */
+.score-team {
+    position: relative;
+
+    display: flex;
+    flex: 0 0 155px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 0;
+    max-width: 190px;
+    min-height: 108px;
+
+    padding: 14px;
+    overflow: hidden;
+
+    background: #1A3542;
+    color: #F7F4ED;
+
+    border: 1px solid rgba(247, 244, 237, 0.09);
+    border-radius: 17px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+    transition:
+        background 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+/* Textes à l'intérieur des cartes */
+.score-team span,
+.score-team p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Score plus visible */
+.score-team strong {
+    color: #F6C453;
+    font-size: 1.35rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Petite interaction au toucher */
+.score-team:active {
+    transform: scale(0.98);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .score-board {
+        padding: 13px;
+        margin-bottom: 20px;
+        border-radius: 19px;
+    }
+
+    .score-board-list {
+        gap: 10px;
+    }
+
+    .score-team {
+        flex-basis: 145px;
+        min-height: 105px;
+        padding: 12px;
+        border-radius: 15px;
+    }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .score-team {
+        transition: none;
+    }
+}
+
+
+/* =====================================
+   SENEGAL CHALLENGE — PLAYFUL SCOREBOARD
+   ===================================== */
+
+.score-board {
+    border: 0;
+    border-radius: 30px 30px 24px 24px;
+    padding: 17px 15px 13px;
+    background: #102C3A;
+    box-shadow: 0 7px 0 #D8D0C1, 0 12px 22px rgba(16, 44, 58, 0.12);
+}
+
+/* Défilement des équipes */
+.score-board-list {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    padding: 7px 4px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #F6C453 transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Cartes arrondies, ambiance jeu entre amis */
+.score-team {
+    position: relative;
+    flex: 0 0 152px;
+    min-height: 112px;
+    padding: 15px 13px;
+    gap: 9px;
+
+    border: 2px solid rgba(247, 244, 237, 0.08);
+    border-radius: 25px 25px 25px 12px;
+
+    background: #244451;
+    color: #F7F4ED;
+
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.13);
+
+    transition:
+        transform 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+}
+
+/* Petit effet rebondi au toucher */
+.score-team:active {
+    transform: scale(0.96) rotate(-1deg);
+}
+
+/* Noms des équipes */
+.score-team span,
+.score-team p {
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+}
+
+/* Gros score bien visible */
+.score-team strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 38px;
+    min-height: 38px;
+    padding: 5px 10px;
+
+    border-radius: 15px 15px 15px 5px;
+    background: #F6C453;
+    color: #102C3A;
+
+    font-size: 1.3rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .score-board {
+        padding: 14px 12px 10px;
+        border-radius: 27px 27px 22px 22px;
+    }
+
+    .score-board-list {
+        gap: 10px;
+    }
+
+    .score-team {
+        flex-basis: 143px;
+        min-height: 106px;
+        padding: 13px 11px;
+        border-radius: 23px 23px 23px 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .score-team {
+        transition: none;
+    }
+}
+

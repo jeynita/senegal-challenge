@@ -76,6 +76,7 @@ let duoRoleTurns = [];
 let currentWord = null;
 let secondsRemaining = 60;
 let timerInterval = null;
+
 let turnFinished = false;
 let gameEnded = false;
 let nextTurnTimeout = null;
@@ -94,6 +95,7 @@ const scoreBoardList = document.createElement("div");
 scoreBoardList.className = "score-board-list";
 
 scoreBoard.append(scoreBoardTitle, scoreBoardList);
+
 gameDuoLabel.insertAdjacentElement("beforebegin", scoreBoard);
 
 scoreBoard.hidden = true;
@@ -198,7 +200,10 @@ function updatePlayersDisplay() {
             "Ajoutez un joueur pour avoir un nombre pair."
         );
     } else {
-        showMessage(formMessage, "Parfait ! Vous pouvez continuer.");
+        showMessage(
+            formMessage,
+            "Parfait ! Vous pouvez continuer."
+        );
     }
 }
 
@@ -311,6 +316,8 @@ function displayAllDuos() {
     });
 }
 
+/* 7. SAISIE DES MOTS */
+
 wordsButton.addEventListener("click", () => {
     currentWordPlayerIndex = 0;
     submittedWords = [];
@@ -318,8 +325,6 @@ wordsButton.addEventListener("click", () => {
     showScreen(wordsScreen);
     showWordEntry();
 });
-
-/* 7. SAISIE DES MOTS */
 
 function showWordEntry() {
     wordPrivateScreen.hidden = false;
@@ -350,13 +355,16 @@ function addWordInput() {
     input.name = "word";
     input.maxLength = 50;
     input.autocomplete = "off";
-    input.placeholder = `Mot ${wordInputs.children.length + 1}`;
+    input.placeholder =
+        `Mot ${wordInputs.children.length + 1}`;
 
     wordInputs.appendChild(input);
 }
 
 function updateWordCount() {
-    const inputs = [...wordInputs.querySelectorAll("input")];
+    const inputs = [
+        ...wordInputs.querySelectorAll("input")
+    ];
 
     const filled = inputs.filter(
         (input) => input.value.trim() !== ""
@@ -383,7 +391,9 @@ wordInputs.addEventListener("input", updateWordCount);
 wordsForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const enteredWords = [...wordInputs.querySelectorAll("input")]
+    const enteredWords = [
+        ...wordInputs.querySelectorAll("input")
+    ]
         .map((input) => input.value.trim())
         .filter(Boolean);
 
@@ -405,7 +415,8 @@ wordsForm.addEventListener("submit", (event) => {
         nextPlayerMessage.textContent =
             `Passe le téléphone à ${nextPlayer}.`;
 
-        readyButton.textContent = `C'est parti, ${nextPlayer} !`;
+        readyButton.textContent =
+            `C'est parti, ${nextPlayer} !`;
     } else {
         wordPrivateScreen.hidden = true;
         nextPlayerScreen.hidden = true;
@@ -414,6 +425,7 @@ wordsForm.addEventListener("submit", (event) => {
 });
 
 readyButton.addEventListener("click", showWordEntry);
+
 
 /* 8. PRÉPARATION DU SALADIER */
 
@@ -450,6 +462,7 @@ prepareSaladButton.addEventListener("click", () => {
     startGame();
 });
 
+
 /* 9. DÉBUT DE LA PARTIE */
 
 function startGame() {
@@ -462,13 +475,12 @@ function startGame() {
     showScreen(gameScreen);
 
     scoreBoard.hidden = false;
-scoreBoard.style.display = "";
+    scoreBoard.style.display = "";
     stopGameButton.hidden = true;
 
     updateScoreBoard();
     startTurn();
 }
-
 
 function startTurn() {
     if (gameEnded) return;
@@ -513,19 +525,17 @@ function startTurn() {
     gameActions.hidden = true;
     nextTurnButton.hidden = true;
 
-    // Afficher la barre de scores avec le style défini dans le CSS.
     scoreBoard.hidden = false;
     scoreBoard.style.display = "";
 
-    // Actualiser les points et mettre en évidence le duo concerné.
     updateScoreBoard();
 }
 
 
-/* 11. RÉVÉLATION DES MOTS */
+/* 10. GESTION DU MOT ET RÉVÉLATION AUTOMATIQUE */
 
-revealWordButton.addEventListener("click", () => {
-    if (turnFinished || gameEnded || currentWord !== null) return;
+function displayNextWord(startChronometer = false) {
+    if (turnFinished || gameEnded) return;
 
     if (saladWords.length === 0) {
         endGame("Tous les mots ont été devinés !");
@@ -543,13 +553,19 @@ revealWordButton.addEventListener("click", () => {
     gameMessage.textContent =
         "Mime sans parler et sans montrer le mot à ton partenaire !";
 
-    // Le chronomètre démarre à la révélation du premier mot.
-    if (timerInterval === null) {
+    if (startChronometer && timerInterval === null) {
         startTimer();
     }
+}
+
+revealWordButton.addEventListener("click", () => {
+    if (turnFinished || gameEnded || currentWord !== null) return;
+
+    displayNextWord(true);
 });
 
-/* 12. CHRONOMÈTRE */
+
+/* 11. CHRONOMÈTRE */
 
 function startTimer() {
     if (timerInterval !== null || turnFinished || gameEnded) return;
@@ -580,6 +596,8 @@ function stopTimer() {
     }
 }
 
+/* 12. GESTION DES CHANGEMENTS DE TOUR */
+
 function clearPendingTurn() {
     if (nextTurnTimeout !== null) {
         clearTimeout(nextTurnTimeout);
@@ -587,63 +605,67 @@ function clearPendingTurn() {
     }
 }
 
+
 /* 13. MOT DEVINÉ */
 
 guessedButton.addEventListener("click", () => {
-    if (turnFinished || gameEnded || currentWord === null) return;
+    if (turnFinished || gameEnded || currentWord === null) {
+        return;
+    }
 
+    // Ajouter un point au duo actuel.
     scores[currentDuoIndex]++;
 
+    // Retirer le mot deviné définitivement.
     currentWord = null;
 
-    gameWord.textContent = "";
-    gameWordContainer.hidden = true;
-    gameActions.hidden = true;
-
+    // Actualiser le tableau des scores.
     updateScoreBoard();
 
-    // Fin immédiate si tous les mots ont été devinés.
+    // Terminer si tous les mots ont été devinés.
     if (saladWords.length === 0) {
+        gameWord.textContent = "";
+        gameWordContainer.hidden = true;
+        gameActions.hidden = true;
+
         endGame("Tous les mots ont été devinés !");
         return;
     }
 
-    revealWordButton.hidden = false;
-    revealWordButton.disabled = false;
-    revealWordButton.textContent = "Mot suivant";
+    // Afficher automatiquement le mot suivant.
+    displayNextWord();
 
     gameMessage.textContent =
-        "Bien joué ! Un point pour votre duo.";
+        "Bien joué ! +1 point ! À vous le mot suivant !";
 });
+
 
 /* 14. MOT PASSÉ */
 
 passButton.addEventListener("click", () => {
-    if (turnFinished || gameEnded || currentWord === null) return;
+    if (turnFinished || gameEnded || currentWord === null) {
+        return;
+    }
 
-    // Le mot passé retourne à la fin du saladier.
+    // Remettre le mot à la fin du saladier.
     saladWords.push(currentWord);
 
     currentWord = null;
 
-    gameWord.textContent = "";
-    gameWordContainer.hidden = true;
-    gameActions.hidden = true;
+    // Afficher automatiquement le mot suivant.
+    displayNextWord();
 
-    revealWordButton.hidden = false;
-    revealWordButton.disabled = false;
-    revealWordButton.textContent = "Mot suivant";
-
-    gameMessage.textContent =
-        "Mot passé ! Il reviendra plus tard.";
+    gameMessage.textContent = "Mot passé ! On continue !";
 });
 
-/* 15. FIN AUTOMATIQUE DU TOUR ET ROTATION DES DUOS */
+
+/* 15. FIN DU TOUR ET ROTATION DES DUOS */
 
 function finishTurn() {
     if (turnFinished || gameEnded) return;
 
     turnFinished = true;
+
     stopTimer();
 
     // Le mot non deviné retourne dans le saladier.
@@ -665,9 +687,10 @@ function finishTurn() {
     gameMessage.textContent =
         "Temps écoulé ! Préparez-vous pour le duo suivant.";
 
-    // Les rôles s'inverseront lors du prochain tour de ce duo.
+    // Inverser les rôles au prochain tour de ce duo.
     duoRoleTurns[currentDuoIndex]++;
 
+    // Attendre deux secondes avant le prochain duo.
     nextTurnTimeout = setTimeout(() => {
         nextTurnTimeout = null;
 
@@ -678,16 +701,17 @@ function finishTurn() {
             return;
         }
 
-        // Rotation circulaire des duos.
-        currentDuoIndex = (currentDuoIndex + 1) % duos.length;
+        // Passer au duo suivant, en boucle.
+        currentDuoIndex =
+            (currentDuoIndex + 1) % duos.length;
 
         startTurn();
     }, 2000);
-};
-
+}
 
 // La rotation des duos est automatique.
 nextTurnButton.addEventListener("click", () => {});
+
 
 /* 16. TABLEAU DES SCORES EN DIRECT */
 
@@ -696,8 +720,10 @@ function updateScoreBoard() {
 
     duos.forEach((duo, index) => {
         const item = document.createElement("div");
+
         item.className = "score-team";
 
+        // Mettre en évidence le duo qui joue.
         if (index === currentDuoIndex && !gameEnded) {
             item.classList.add("score-team-active");
         }
@@ -725,19 +751,22 @@ function updateScoreBoard() {
 
         const scoreValue = document.createElement("div");
         scoreValue.className = "score-team-value";
+
         scoreValue.append(points, pointsLabel);
 
         item.append(teamInfo, scoreValue);
+
         scoreBoardList.appendChild(item);
     });
 
-    gameScore.textContent = "Points gagnés en devinant les mots";
+    // Aucun texte supplémentaire sous les scores.
 }
+
 
 /* 17. BOUTON ARRÊTER LA PARTIE */
 
 stopGameButton.addEventListener("click", () => {
-    // Le bouton est masqué : la partie ne peut pas être arrêtée manuellement.
+    // Le bouton reste désactivé dans cette version.
     return;
 });
 
@@ -768,6 +797,7 @@ function resetGameData() {
     gameWord.textContent = "";
     gameWordContainer.hidden = true;
     gameActions.hidden = true;
+
     revealWordButton.hidden = false;
     nextTurnButton.hidden = true;
 
@@ -785,22 +815,28 @@ function resetGameData() {
     }
 }
 
+
 /*
  * Option 1 : conserver les joueurs.
  * Les duos sont remélangés et les mots sont saisis à nouveau.
  */
+
 function replayWithSamePlayers() {
     resetGameData();
 
     createDuos();
+
     showScreen(duosScreen);
+
     displayNextDuo();
 }
+
 
 /*
  * Option 2 : effacer les joueurs.
  * La prochaine partie recommence depuis l'inscription.
  */
+
 function startNewGame() {
     resetGameData();
 
@@ -808,8 +844,10 @@ function startNewGame() {
     playerNameInput.value = "";
 
     updatePlayersDisplay();
+
     showScreen(homeScreen);
 }
+
 
 /* 19. CLASSEMENT FINAL */
 
@@ -825,6 +863,7 @@ function endGame(message) {
     currentWord = null;
 
     gameScreen.hidden = true;
+
     scoreBoard.hidden = true;
     scoreBoard.style.display = "none";
     stopGameButton.hidden = true;
@@ -845,18 +884,22 @@ function endGame(message) {
         .sort((a, b) => b.score - a.score);
 
     const resultsScreen = document.createElement("section");
+
     resultsScreen.id = "results-screen";
     resultsScreen.className = "game-screen results-screen";
 
     const eyebrow = document.createElement("p");
+
     eyebrow.className = "eyebrow";
     eyebrow.textContent = "SÉNÉGAL CHALLENGE";
 
     const title = document.createElement("h1");
+
     title.className = "game-title";
     title.textContent = "Fin de la partie";
 
     const description = document.createElement("p");
+
     description.className = "game-description";
     description.textContent = message;
 
@@ -871,37 +914,46 @@ function endGame(message) {
         );
 
         const winnerCard = document.createElement("div");
+
         winnerCard.className = "winner-card";
 
         const winnerLabel = document.createElement("p");
+
         winnerLabel.className = "winner-label";
         winnerLabel.textContent =
             winners.length > 1 ? "DUOS À ÉGALITÉ" : "DUO GAGNANT";
 
         const winnerNames = document.createElement("h2");
+
         winnerNames.className = "winner-names";
+
         winnerNames.textContent = winners
             .map((winner) => winner.names.join(" & "))
             .join(" / ");
 
         const winnerPoints = document.createElement("p");
+
         winnerPoints.className = "winner-points";
         winnerPoints.textContent = `${highestScore} point(s)`;
 
         winnerCard.append(winnerLabel, winnerNames, winnerPoints);
+
         resultsScreen.appendChild(winnerCard);
     }
 
     // Classement complet.
     const rankingTitle = document.createElement("h2");
+
     rankingTitle.className = "ranking-title";
     rankingTitle.textContent = "Classement final";
 
     const rankingList = document.createElement("ol");
+
     rankingList.className = "results-ranking";
 
     results.forEach((result, index) => {
         const item = document.createElement("li");
+
         item.className = "results-ranking-item";
 
         if (result.score === results[0]?.score) {
@@ -909,19 +961,23 @@ function endGame(message) {
         }
 
         const rank = document.createElement("span");
+
         rank.className = "ranking-position";
         rank.textContent = String(index + 1).padStart(2, "0");
 
         const team = document.createElement("span");
+
         team.className = "ranking-team";
         team.textContent =
             `Duo ${result.duoNumber} — ${result.names.join(" & ")}`;
 
         const points = document.createElement("strong");
+
         points.className = "ranking-points";
         points.textContent = `${result.score} pts`;
 
         item.append(rank, team, points);
+
         rankingList.appendChild(item);
     });
 
@@ -929,6 +985,7 @@ function endGame(message) {
 
     // Bouton 1 : rejouer avec les mêmes joueurs.
     const replayButton = document.createElement("button");
+
     replayButton.type = "button";
     replayButton.className = "button button-primary restart-button";
     replayButton.textContent = "Rejouer avec les mêmes joueurs";
@@ -937,6 +994,7 @@ function endGame(message) {
 
     // Bouton 2 : commencer une nouvelle partie.
     const newGameButton = document.createElement("button");
+
     newGameButton.type = "button";
     newGameButton.className = "button button-secondary new-game-button";
     newGameButton.textContent = "Nouvelle partie";
@@ -946,10 +1004,13 @@ function endGame(message) {
     resultsScreen.append(replayButton, newGameButton);
 
     gameScreen.insertAdjacentElement("afterend", resultsScreen);
+
     resultsScreen.hidden = false;
 }
+
 
 /* 20. INITIALISATION */
 
 showScreen(homeScreen);
+
 updatePlayersDisplay();
