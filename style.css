@@ -3492,3 +3492,51 @@ body::after {
         animation: none;
     }
 }
+
+/* =========================================
+   BOUTONS DU JEU — PLUS DE CONTRASTE
+========================================= */
+
+/* "Révéler le mot" : marine foncé, texte blanc */
+#reveal-word-button {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 6px 0 #081E28;
+}
+
+#reveal-word-button:hover:not(:disabled) {
+    background: var(--navy-light);
+    border-color: var(--navy-light);
+    box-shadow: 0 9px 0 #081E28;
+}
+
+#reveal-word-button:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #081E28;
+}
+
+/* "Deviné !" : vert plus profond, texte blanc */
+#guessed-button {
+    border-color: #1F8F67;
+    background: #1F8F67;
+    color: var(--white);
+    box-shadow: 0 5px 0 #146B4B;
+}
+
+#guessed-button:hover:not(:disabled) {
+    box-shadow: 0 8px 0 #146B4B;
+}
+
+#guessed-button:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #146B4B;
+}
+
+/* "Passer" : bordure et texte plus marqués */
+#pass-button {
+    border-color: var(--coral);
+    background: var(--white);
+    color: #B83B28;
+    box-shadow: 0 5px 0 #E3C2BA;
+}
