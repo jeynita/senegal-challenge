@@ -2,7 +2,7 @@
 
 Jeu de mime et de devinettes à jouer entre amis, sur un seul téléphone. Les joueurs s'inscrivent, le hasard forme les duos, chacun glisse ses mots dans le saladier, puis on mime, on devine et on rigole.
 
-**Jouer en ligne : https://jeynita.github.io/senega;-challenge**
+**Jouer en ligne : https://senegal-challenge.netlify.app**
 
 ![Aperçu du jeu](preview.png)
 
