@@ -1,0 +1,168 @@
+/* =========================================
+   SENEGAL CHALLENGE — GUIDE DE PREMIÈRE VISITE
+========================================= */
+
+.guide-bubble {
+    position: fixed;
+    right: 12px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    left: 12px;
+    z-index: 50;
+    max-width: 520px;
+    margin-inline: auto;
+    padding: 18px 18px 14px;
+    border-radius: 26px;
+    background: var(--navy);
+    color: var(--cream);
+    box-shadow: 0 6px 0 #081E28, 0 16px 30px rgba(16, 44, 58, 0.25);
+}
+
+.guide-bubble.guide-enter {
+    animation: guideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes guideIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.guide-progress {
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.guide-title {
+    margin: 0 0 6px;
+    color: var(--yellow);
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.guide-text {
+    margin: 0 0 14px;
+    color: #E6E9E7;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.55;
+}
+
+.guide-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.guide-next {
+    flex: 1;
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 0.98rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #D9A936;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #D9A936;
+}
+
+.guide-next:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #D9A936;
+}
+
+.guide-skip {
+    padding: 10px 6px;
+    border: 0;
+    background: none;
+    color: rgba(247, 244, 237, 0.8);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.guide-skip:hover {
+    color: var(--white);
+}
+
+.guide-next:focus-visible,
+.guide-skip:focus-visible,
+.guide-replay:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 3px;
+}
+
+/* Élément mis en avant par la bulle */
+.guide-highlight {
+    outline: 4px solid var(--yellow);
+    outline-offset: 6px;
+    animation: guidePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes guidePulse {
+    0%, 100% {
+        outline-color: var(--yellow);
+        outline-offset: 6px;
+    }
+
+    50% {
+        outline-color: var(--coral);
+        outline-offset: 10px;
+    }
+}
+
+/* Lien « Revoir le guide » */
+.guide-replay {
+    display: block;
+    margin: 14px auto 0;
+    padding: 6px 10px;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.guide-replay:hover {
+    color: var(--coral);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .guide-bubble.guide-enter,
+    .guide-highlight {
+        animation: none;
+    }
+
+    .guide-next {
+        transition: none;
+    }
+}
