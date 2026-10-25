@@ -2839,3 +2839,656 @@ h1 span {
 #word-private-screen > p {
     margin-bottom: 24px;
 }
+
+/* =========================================
+   DUOS — VERSION FUN ET MODERNE
+   À coller tout à la fin de style.css
+========================================= */
+
+/* ---------- Carte du duo (écran de révélation) ---------- */
+.duo-card {
+    position: relative;
+    overflow: hidden;
+    max-width: 380px;
+    margin: 32px auto 26px;
+    padding: 28px 20px 26px;
+    border: 0;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(246, 196, 83, 0.20) 0 7px, transparent 8px),
+        radial-gradient(circle at 88% 14%, rgba(228, 93, 67, 0.30) 0 5px, transparent 6px),
+        radial-gradient(circle at 82% 86%, rgba(246, 196, 83, 0.16) 0 9px, transparent 10px),
+        radial-gradient(circle at 8% 84%, rgba(247, 244, 237, 0.12) 0 4px, transparent 5px),
+        var(--navy);
+    box-shadow: 0 8px 0 #081E28, 0 18px 30px rgba(16, 44, 58, 0.18);
+}
+
+/* Pastille "DUO 1" */
+.duo-card .duo-number {
+    display: inline-block;
+    width: auto;
+    margin: 0 0 24px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    rotate: -2deg;
+    box-shadow: 0 3px 0 #D9A936;
+}
+
+/* ---------- Les deux noms ---------- */
+.duo-card .duo-names {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    margin: 0 0 22px;
+}
+
+.duo-card .duo-names > span:not(.duo-ampersand) {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 96px;
+    padding: 14px 10px;
+    border: 0;
+    border-radius: 22px;
+    font-family: "Fredoka", sans-serif;
+    font-size: clamp(1.15rem, 5vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.duo-card .duo-names > span:first-child {
+    background: var(--yellow);
+    color: var(--navy);
+    rotate: -3deg;
+    box-shadow: 0 5px 0 #D9A936;
+}
+
+.duo-card .duo-names > span:last-child {
+    background: var(--coral);
+    color: var(--white);
+    rotate: 3deg;
+    box-shadow: 0 5px 0 #B83B28;
+}
+
+/* Le "&" au centre, à cheval sur les deux bulles */
+.duo-card .duo-names .duo-ampersand {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0 -14px;
+    border: 3px solid var(--navy);
+    background: var(--cream);
+    color: var(--navy);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.duo-card .duo-message {
+    color: rgba(247, 244, 237, 0.85);
+    font-size: 0.92rem;
+}
+
+/* Les bulles rebondissent quand le duo est révélé */
+@keyframes tilePop {
+    0%   { opacity: 0; transform: scale(0.5) translateY(14px); }
+    70%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.duo-card.reveal .duo-names > span {
+    animation: tilePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.duo-card.reveal .duo-names > span:last-child {
+    animation-delay: 0.14s;
+}
+
+.duo-card.reveal .duo-names .duo-ampersand {
+    animation-delay: 0.22s;
+}
+
+/* ---------- Liste "Tous les duos" ---------- */
+#all-duos-list li {
+    border: 0;
+    border-left: 8px solid var(--coral);
+    border-radius: 18px;
+    padding: 15px 18px 15px 20px;
+    box-shadow: 0 4px 0 #E3DDCF;
+    transition: transform 0.2s ease;
+}
+
+#all-duos-list li:hover {
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   ÉCRAN DE JEU — NOM DU MIMEUR
+========================================= */
+
+#game-duo-label.game-description {
+    display: inline-block;
+    margin: 16px 0 24px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    rotate: -2deg;
+    box-shadow: 0 3px 0 #D9A936;
+}
+
+.game-player-card {
+    position: relative;
+    overflow: hidden;
+    padding: 26px 18px 30px;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(246, 196, 83, 0.20) 0 7px, transparent 8px),
+        radial-gradient(circle at 90% 16%, rgba(228, 93, 67, 0.30) 0 5px, transparent 6px),
+        radial-gradient(circle at 84% 88%, rgba(246, 196, 83, 0.16) 0 9px, transparent 10px),
+        var(--navy);
+    box-shadow: 0 8px 0 #081E28, 0 18px 30px rgba(16, 44, 58, 0.16);
+    text-align: center;
+    animation: appear 0.4s ease-out both;
+}
+
+#game-mimer-label {
+    display: inline-block;
+    margin: 0 0 16px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(247, 244, 237, 0.12);
+    color: var(--yellow);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#game-mimer-name {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 8px 24px 10px;
+    border-radius: 20px;
+    background: var(--coral);
+    color: var(--white);
+    font-family: "Fredoka", sans-serif;
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    rotate: -2deg;
+    box-shadow: 0 5px 0 #B83B28;
+}
+
+/* Très petits écrans */
+@media (max-width: 380px) {
+    .duo-card .duo-names > span:not(.duo-ampersand) {
+        min-height: 84px;
+        padding: 10px 6px;
+    }
+
+    .duo-card .duo-names .duo-ampersand {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+        margin: 0 -12px;
+        font-size: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .duo-card.reveal .duo-names > span,
+    .game-player-card,
+    #all-duos-list li {
+        animation: none;
+        transition: none;
+    }
+}t
+
+
+/* =========================================
+   SENEGAL CHALLENGE — STYLE FUN ET MODERNE
+   À coller tout à la fin de style.css
+========================================= */
+
+/* Variables manquantes + nouvelles couleurs */
+:root {
+    --shadow-md: 0 12px 30px rgba(16, 44, 58, 0.10);
+    --yellow-light: #FFF0D0;
+    --border: #E4E0D6;
+    --navy-light: #1A3F52;
+    --mint: #3FBF94;
+    --pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- Fond : pois + formes douces ---------- */
+body {
+    background-color: var(--cream);
+    background-image: radial-gradient(rgba(16, 44, 58, 0.07) 1.5px, transparent 1.6px);
+    background-size: 22px 22px;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+body::before {
+    top: -90px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    background: var(--yellow);
+    opacity: 0.22;
+}
+
+body::after {
+    bottom: -110px;
+    left: -90px;
+    width: 280px;
+    height: 280px;
+    background: var(--coral);
+    opacity: 0.14;
+}
+
+/* ---------- Logo ---------- */
+.logo span {
+    display: inline-block;
+    padding: 0 10px 2px;
+    border-radius: 10px;
+    background: var(--coral);
+    color: var(--white);
+    rotate: -3deg;
+    box-shadow: 0 3px 0 #B83B28;
+}
+
+/* ---------- Petites étiquettes ---------- */
+.hero .eyebrow,
+.duos-screen .eyebrow,
+.game-screen .eyebrow,
+#words-screen .eyebrow {
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--yellow-light);
+    color: var(--navy);
+    letter-spacing: 2px;
+}
+
+/* ---------- Accueil ---------- */
+.hero h1 span {
+    display: inline-block;
+    padding: 0 8px;
+    background: linear-gradient(transparent 64%, var(--yellow) 64%);
+    rotate: -2deg;
+}
+
+.hero-note {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: 0 3px 0 #E3DDCF;
+}
+
+/* ---------- Boutons principaux ---------- */
+.start-button {
+    border-radius: 18px;
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--white);
+    box-shadow: 0 6px 0 #B83B28;
+}
+
+.start-button:hover:not(:disabled) {
+    background: #F06A50;
+    border-color: #F06A50;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 #B83B28;
+}
+
+.start-button:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #B83B28;
+}
+
+.continue-button {
+    background: var(--navy);
+    border-color: var(--navy);
+    box-shadow: 0 6px 0 #081E28;
+}
+
+.continue-button:hover:not(:disabled) {
+    background: var(--navy-light);
+    border-color: var(--navy-light);
+    box-shadow: 0 9px 0 #081E28;
+}
+
+.continue-button:active:not(:disabled) {
+    box-shadow: 0 2px 0 #081E28;
+}
+
+.continue-button:disabled {
+    box-shadow: 0 6px 0 #081E28;
+}
+
+/* Le bouton de l'accueil frétille de temps en temps */
+@keyframes wiggle {
+    0%, 86%, 100% { rotate: 0deg; }
+    90% { rotate: -2.5deg; }
+    94% { rotate: 2.5deg; }
+    98% { rotate: -1deg; }
+}
+
+#start-button {
+    animation: wiggle 4s ease-in-out 1.5s infinite;
+}
+
+/* ---------- Inscription des joueurs ---------- */
+.player-input-row input {
+    height: 52px;
+    border-width: 2.5px;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.players-list li {
+    border-left: 6px solid var(--yellow);
+    box-shadow: 0 4px 0 #E3DDCF;
+}
+
+.players-list li:nth-child(4n+2) { border-left-color: var(--coral); }
+.players-list li:nth-child(4n+3) { border-left-color: var(--mint); }
+.players-list li:nth-child(4n+4) { border-left-color: var(--navy); }
+
+.players-list li:hover {
+    transform: translateY(-2px) rotate(-0.5deg);
+}
+
+/* ---------- Saisie des mots ---------- */
+#word-private-screen,
+#next-player-screen,
+#words-finished-screen {
+    border: 0;
+    border-radius: 28px;
+    box-shadow: 0 7px 0 #E3DDCF, 0 16px 30px rgba(16, 44, 58, 0.08);
+}
+
+#word-inputs .word-input {
+    border-width: 2.5px;
+    border-radius: 16px;
+}
+
+#word-inputs .word-input:focus {
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(228, 93, 67, 0.15);
+}
+
+/* =========================================
+   BOUTONS DU JEU
+========================================= */
+
+.button {
+    border-radius: 16px;
+    font-weight: 900;
+}
+
+.button-primary {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    color: var(--navy);
+    box-shadow: 0 5px 0 #D9A936;
+}
+
+.button-primary:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #D9A936;
+}
+
+.button-primary:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #D9A936;
+}
+
+/* CORRECTION : bouton secondaire visible sur fond crème */
+.button-secondary {
+    border-color: var(--border);
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: 0 5px 0 #E3DDCF;
+}
+
+.button-secondary:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #E3DDCF;
+}
+
+.button-secondary:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #E3DDCF;
+}
+
+/* =========================================
+   ÉCRAN DE JEU
+========================================= */
+
+/* Chrono : gros ballon */
+.game-timer {
+    width: 138px;
+    height: 138px;
+    border: 7px solid var(--yellow);
+    background: var(--white);
+    font-size: 3.8rem;
+    box-shadow: 0 7px 0 #D9A936, 0 16px 26px rgba(16, 44, 58, 0.10);
+}
+
+.game-timer.timer-warning {
+    border-color: var(--coral);
+    box-shadow: 0 7px 0 #B83B28, 0 16px 26px rgba(228, 93, 67, 0.22);
+}
+
+#game-timer + p {
+    margin-bottom: 4px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Le mot à faire deviner : carte jaune penchée */
+.game-word-container {
+    margin: 26px 0 8px;
+    padding: 22px 16px 26px;
+    border-radius: 26px;
+    background: var(--yellow);
+    color: var(--navy);
+    rotate: -1.5deg;
+    box-shadow: 0 7px 0 #D9A936, 0 16px 26px rgba(16, 44, 58, 0.10);
+}
+
+.game-word-container:not([hidden]) {
+    animation: wordPop 0.5s var(--pop) both;
+}
+
+.game-word-container > p {
+    color: var(--navy);
+    opacity: 0.7;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+}
+
+#game-word {
+    margin-top: 10px;
+    font-family: "Fredoka", sans-serif;
+    font-size: clamp(2rem, 9vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+@keyframes wordPop {
+    0%   { opacity: 0; transform: scale(0.6) translateY(16px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* CORRECTION : message lisible sur fond crème (bulle blanche) */
+.game-message {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 22px auto 20px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: var(--white);
+    color: var(--navy);
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.5;
+    box-shadow: 0 4px 0 #E3DDCF;
+}
+
+.game-message:empty {
+    display: none;
+}
+
+/* Boutons d'action */
+#reveal-word-button,
+#next-turn-button {
+    width: 100%;
+}
+
+#next-turn-button {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 5px 0 #081E28;
+}
+
+#game-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#guessed-button {
+    border-color: var(--mint);
+    background: var(--mint);
+    color: var(--white);
+    box-shadow: 0 5px 0 #2A9A74;
+}
+
+#guessed-button:hover:not(:disabled) {
+    box-shadow: 0 8px 0 #2A9A74;
+}
+
+#guessed-button:active:not(:disabled) {
+    box-shadow: 0 1px 0 #2A9A74;
+}
+
+#pass-button {
+    color: var(--coral);
+}
+
+/* ---------- Tableau des scores : duo actif en jaune ---------- */
+.score-team-active {
+    border-color: var(--yellow);
+    background: var(--yellow);
+}
+
+.score-team-active * {
+    color: var(--navy);
+}
+
+/* ---------- Résultats ---------- */
+.results-screen {
+    border: 0;
+    box-shadow: 0 8px 0 #E3DDCF, 0 18px 40px rgba(16, 44, 58, 0.08);
+}
+
+.winner-card {
+    background:
+        radial-gradient(circle at 12% 20%, rgba(246, 196, 83, 0.25) 0 7px, transparent 8px),
+        radial-gradient(circle at 90% 18%, rgba(228, 93, 67, 0.35) 0 5px, transparent 6px),
+        radial-gradient(circle at 84% 86%, rgba(246, 196, 83, 0.18) 0 9px, transparent 10px),
+        var(--navy);
+    box-shadow: 0 8px 0 #081E28;
+}
+
+.winner-points {
+    rotate: -2deg;
+    box-shadow: 0 3px 0 #D9A936;
+}
+
+.results-ranking-item {
+    border: 0;
+    box-shadow: 0 4px 0 #E3DDCF;
+}
+
+.results-ranking-item.results-ranking-winner {
+    background: var(--yellow-light);
+    box-shadow: 0 4px 0 #E9CC84;
+}
+
+.results-screen .restart-button {
+    border-radius: 18px;
+    box-shadow: 0 6px 0 #B83B28;
+}
+
+.results-screen .restart-button:hover {
+    box-shadow: 0 9px 0 #B83B28;
+}
+
+.results-screen .restart-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #B83B28;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+    #game-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .game-timer {
+        width: 120px;
+        height: 120px;
+        font-size: 3.3rem;
+    }
+
+    body::before { width: 190px; height: 190px; }
+    body::after  { width: 210px; height: 210px; }
+}
+
+/* ---------- Accessibilité ---------- */
+@media (prefers-reduced-motion: reduce) {
+    #start-button,
+    .game-word-container:not([hidden]) {
+        animation: none;
+    }
+}
