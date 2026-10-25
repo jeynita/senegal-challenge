@@ -174,7 +174,9 @@ function updatePlayersDisplay() {
         name.textContent = player;
 
         removeButton.type = "button";
-        removeButton.textContent = "Retirer";
+        removeButton.textContent = "×";
+removeButton.setAttribute("aria-label", "Retirer ce joueur");
+removeButton.title = "Retirer ce joueur";
 
         removeButton.addEventListener("click", () => {
             players.splice(index, 1);
@@ -361,6 +363,7 @@ function addWordInput() {
     wordInputs.appendChild(input);
 }
 
+
 function updateWordCount() {
     const inputs = [
         ...wordInputs.querySelectorAll("input")
@@ -370,8 +373,10 @@ function updateWordCount() {
         (input) => input.value.trim() !== ""
     ).length;
 
-    wordsCount.textContent = `${filled} mot(s) saisi(s)`;
+    wordsCount.textContent =
+        `${filled}/5 mots saisis · 2 minimum`;
 }
+
 
 addWordButton.addEventListener("click", () => {
     if (wordInputs.querySelectorAll("input").length >= 5) {

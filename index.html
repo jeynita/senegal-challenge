@@ -1,21 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="description"
-        content="Sénégal Challenge : le jeu de mime et de devinettes entre amis."
-    >
+    <meta name="description" content="Sénégal Challenge : le jeu de mime et de devinettes entre amis.">
     <meta name="theme-color" content="#F7F4ED">
 
     <title>Sénégal Challenge — Mime, devine, rigole !</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
         rel="stylesheet"
@@ -51,11 +46,7 @@
                 et amuse-toi !
             </p>
 
-            <button
-                class="start-button"
-                id="start-button"
-                type="button"
-            >
+            <button class="start-button" id="start-button" type="button">
                 <span class="button-label">Commencer à jouer</span>
 
                 <svg
@@ -88,20 +79,36 @@
         <!-- =========================
              2. INSCRIPTION DES JOUEURS
         ========================== -->
-        <section
-            class="players-screen"
-            id="players-screen"
-            hidden
-        >
+        <section class="players-screen" id="players-screen" hidden>
+
             <button
-                class="back-button"
-                id="back-button"
                 type="button"
+                id="back-button"
+                class="back-button"
+                aria-label="Retour à l'accueil"
+                title="Retour à l'accueil"
             >
-                ← Retour
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M19 12H5"></path>
+                    <path d="m12 19-7-7 7-7"></path>
+                </svg>
             </button>
 
-            <p class="eyebrow">QUE LA PARTIE COMMENCE !</p>
+            <p class="eyebrow players-eyebrow">
+                <span class="eyebrow-dot"></span>
+                C'EST PARTI POUR LE DÉLIRE
+            </p>
 
             <h1 class="screen-title">
                 Qui joue <span>aujourd'hui ?</span>
@@ -128,36 +135,23 @@
                     >
 
                     <button
-                        class="add-button"
                         type="submit"
-                    >
-                        Ajouter +
-                    </button>
+                        class="add-button"
+                        aria-label="Ajouter un joueur"
+                        title="Ajouter un joueur"
+                    >+</button>
                 </div>
 
-                <p
-                    class="form-message"
-                    id="form-message"
-                    aria-live="polite"
-                ></p>
+                <p class="form-message" id="form-message" aria-live="polite"></p>
             </form>
 
             <div class="players-list-section">
                 <div class="players-list-heading">
                     <h2>Les participants</h2>
-
-                    <span
-                        class="player-count"
-                        id="player-count"
-                    >
-                        0 joueur
-                    </span>
+                    <span class="player-count" id="player-count">0 joueur</span>
                 </div>
 
-                <ul
-                    class="players-list"
-                    id="players-list"
-                ></ul>
+                <ul class="players-list" id="players-list"></ul>
 
                 <p class="players-hint">
                     Il faut au moins 4 joueurs et un nombre pair pour jouer.
@@ -194,21 +188,14 @@
         <!-- =========================
              3. RÉVÉLATION DES DUOS
         ========================== -->
-        <section
-            class="duos-screen"
-            id="duos-screen"
-            hidden
-        >
+        <section class="duos-screen" id="duos-screen" hidden>
             <p class="eyebrow">LE HASARD A PARLÉ !</p>
 
             <h1 class="screen-title">
                 Qui sera <span>avec qui ?</span>
             </h1>
 
-            <p
-                class="screen-description"
-                id="duos-description"
-            >
+            <p class="screen-description" id="duos-description">
                 Les équipes vont être révélées une par une...
             </p>
 
@@ -217,7 +204,7 @@
 
                 <div class="duo-names" id="duo-names">
                     <span>?</span>
-                    <span class="duo-ampersand">&</span>
+                    <span class="duo-ampersand">&amp;</span>
                     <span>?</span>
                 </div>
 
@@ -244,7 +231,7 @@
                     id="words-button"
                     type="button"
                 >
-                    <span class="button-label">Préparer le saladier</span>
+                    <span class="button-label">Saisir les mots</span>
                 </button>
             </div>
         </section>
@@ -253,31 +240,18 @@
         <!-- =========================
              4. SAISIE PRIVÉE DES MOTS
         ========================== -->
-        <section
-            id="words-screen"
-            class="players-screen"
-            hidden
-        >
-            <div class="section-heading">
-                <p class="eyebrow">LE SALADIER</p>
-
-                <h1>Place à ton imagination !</h1>
-
-                <p id="word-player-message">
-                    Prépare tes mots en secret.
-                </p>
-            </div>
+        <section id="words-screen" class="players-screen" hidden>
 
             <div id="word-private-screen">
-                <div class="word-lock">
-                    🔒 Saisie privée
+                <div class="section-heading">
+                    <p class="eyebrow">LE SALADIER</p>
+                    <h1>Place à ton imagination !</h1>
+                    <p id="word-player-message">Prépare tes mots en secret.</p>
                 </div>
 
                 <h2 id="word-player-name">À toi de jouer !</h2>
 
-                <p>
-                    Choisis entre 3 et 5 mots que les autres devront deviner.
-                </p>
+                <p>Choisis entre 2 et 5 mots que les autres devront deviner.</p>
 
                 <form id="words-form">
                     <div id="word-inputs">
@@ -287,25 +261,13 @@
                             name="word"
                             placeholder="Mot 1"
                             maxlength="40"
-                            required
                         >
-
                         <input
                             type="text"
                             class="word-input"
                             name="word"
                             placeholder="Mot 2"
                             maxlength="40"
-                            required
-                        >
-
-                        <input
-                            type="text"
-                            class="word-input"
-                            name="word"
-                            placeholder="Mot 3"
-                            maxlength="40"
-                            required
                         >
                     </div>
 
@@ -317,19 +279,11 @@
                         Ajouter un mot
                     </button>
 
-                    <p id="words-count">
-                        3 mots minimum, 5 maximum.
-                    </p>
+                    <p id="words-count">2 mots minimum, 5 maximum.</p>
 
-                    <p
-                        id="words-message"
-                        role="status"
-                    ></p>
+                    <p id="words-message" role="status"></p>
 
-                    <button
-                        type="submit"
-                        class="button button-primary"
-                    >
+                    <button type="submit" class="button button-primary">
                         Valider mes mots
                     </button>
                 </form>
@@ -364,60 +318,35 @@
                     Préparer le saladier
                 </button>
             </div>
+
         </section>
 
 
         <!-- =========================
              5. ÉCRAN DE JEU
         ========================== -->
-        <section
-            id="game-screen"
-            class="game-screen"
-            hidden
-        >
+        <section id="game-screen" class="game-screen" hidden>
             <p class="eyebrow">SÉNÉGAL CHALLENGE</p>
 
             <h1 class="game-title">À toi de mimer !</h1>
 
-            <p
-                id="game-duo-label"
-                class="game-description"
-            >
-                Duo 1
-            </p>
+            <p id="game-duo-label" class="game-description">Duo 1</p>
 
             <div class="game-player-card">
-                <p id="game-mimer-label">
-                    C'est à toi de mimer
-                </p>
-
+                <p id="game-mimer-label">C'est à toi de mimer</p>
                 <h2 id="game-mimer-name">Joueur</h2>
             </div>
 
-            <div
-                id="game-timer"
-                class="game-timer"
-                aria-live="off"
-            >
-                60
-            </div>
+            <div id="game-timer" class="game-timer" aria-live="off">60</div>
 
             <p>secondes restantes</p>
 
-            <div
-                id="game-word-container"
-                class="game-word-container"
-                hidden
-            >
+            <div id="game-word-container" class="game-word-container" hidden>
                 <p>FAIS DEVINER CE MOT</p>
                 <h2 id="game-word"></h2>
             </div>
 
-            <p
-                id="game-message"
-                class="game-message"
-                aria-live="polite"
-            >
+            <p id="game-message" class="game-message" aria-live="polite">
                 Prêts ? Révélez le premier mot pour commencer.
             </p>
 
@@ -446,8 +375,6 @@
                     Passer
                 </button>
             </div>
-
-        
 
             <button
                 id="next-turn-button"
